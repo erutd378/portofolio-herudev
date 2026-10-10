@@ -1,0 +1,2483 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Erutd M Thalif — Developer & AI-Assisted Coder</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+    }
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      color: #dbe7f3;
+      line-height: 1.5;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+      background: #0a0a0a;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    /* ===== INTRO OVERLAY ===== */
+    #intro-overlay {
+      position: fixed; inset: 0; z-index: 9999; background: #000000;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      gap: 18px; overflow: hidden; padding: 0 24px;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+      width: 100vw; max-width: 100vw;
+    }
+    #intro-overlay.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+    .intro-line {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 2.4rem; font-weight: 800; letter-spacing: 2px;
+      text-align: center; line-height: 1.3; text-transform: uppercase;
+      opacity: 0;
+      color: #ffffff;
+      background: linear-gradient(135deg, #ffffff, #ffffff, #ffffff);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      max-width: 100%;
+    }
+    .intro-line.from-left { transform: translateX(-120vw); animation: slideFromLeft 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+    .intro-line.from-right { transform: translateX(120vw); animation: slideFromRight 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+    .intro-line:nth-child(1) { animation-delay: 0.2s; }
+    .intro-line:nth-child(2) { animation-delay: 1.4s; }
+    .intro-line:nth-child(3) { animation-delay: 2.6s; }
+    .intro-line:nth-child(4) { animation-delay: 3.8s; }
+    @keyframes slideFromLeft { 0% { transform: translateX(-120vw); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+    @keyframes slideFromRight { 0% { transform: translateX(120vw); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+    @media (max-width: 600px) {
+      .intro-line { font-size: 1.3rem; letter-spacing: 1px; }
+      #intro-overlay { gap: 12px; }
+    }
+
+    /* ===== DEFAULT = TEMA GELAP ===== */
+    body { background: #0a0a0a; color: #dbe7f3; }
+    body .bg-base {
+      background: radial-gradient(circle at 20% 15%, #1a1a1a 0%, transparent 50%),
+        radial-gradient(circle at 80% 25%, #121212 0%, transparent 50%),
+        radial-gradient(circle at 50% 85%, #181818 0%, transparent 55%),
+        linear-gradient(160deg, #0a0a0a 0%, #151515 40%, #0a0a0a 70%, #121212 100%);
+      background-attachment: fixed;
+    }
+    body .bg-white-aurora-1 { background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 60%); }
+    body .bg-white-aurora-2 { background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 60%); }
+    body .bg-white-aurora-3 { background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 65%); }
+    body .bg-color-aurora-1 { background: radial-gradient(circle, rgba(125,211,252,0.06) 0%, rgba(125,211,252,0) 60%); }
+    body .bg-color-aurora-2 { background: radial-gradient(circle, rgba(196,181,253,0.06) 0%, rgba(196,181,253,0) 60%); }
+    body .bg-grid {
+      background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    }
+    body .bg-vignette { background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.7) 100%); }
+    body header { background-color: rgba(10,10,10,0.85); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    body .logo { background: linear-gradient(135deg, #ffffff, #7dd3fc, #c4b5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    body .logo small { color: #a0b8cc; -webkit-text-fill-color: #a0b8cc; }
+    body .hamburger span { background: #ffffff; }
+    body .icon-btn { border-color: rgba(255,255,255,0.25); color: #ffffff; }
+    body .icon-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
+    body .nav-menu { background: #0f0f0f; border-left: 1px solid rgba(255,255,255,0.08); }
+    body .nav-menu ul li a { color: #c8d8e6; }
+    body .nav-menu ul li a i { color: #ffffff; }
+    body .nav-menu ul li a:hover { background: rgba(134,239,172,0.10); color: #ffffff; }
+    body .nav-menu ul li a:hover i { color: #86efac; }
+    body .submenu li a { color: #8ba9c0 !important; }
+    body .submenu li a i { color: #6c8ba0 !important; }
+    body .submenu li a:hover { background: rgba(134,239,172,0.08) !important; color: #ffffff !important; }
+    body .overlay { background: rgba(0,0,0,0.8); }
+    body .hero-badge { background: rgba(134,239,172,0.10); color: #ffffff; border: 1px solid rgba(134,239,172,0.3); }
+    body .hero h1 { color: #ffffff; }
+    body .hero h1 .highlight { color: #ffffff; border-bottom: 4px solid rgba(134,239,172,0.5); }
+    body .hero p { color: #b8cfe3; }
+    body .hero p strong { color: #ffffff; }
+    body .stat-item h3 { color: #ffffff; }
+    body .stat-item p { color: #8ba9c0; }
+    body .section-header h2 { color: #ffffff; }
+    body .section-header p { color: #8ba9c0; }
+    body .divider { background: linear-gradient(90deg, #ffffff, #86efac, #4ade80); }
+    body .experience-pro { background: rgba(20,20,20,0.55); border: 1px solid rgba(134,239,172,0.25); }
+    body .exp-detail { background: rgba(15,15,15,0.85); border: 1px solid rgba(134,239,172,0.3); }
+    body .exp-detail-header { border-bottom: 1px solid rgba(134,239,172,0.15); }
+    body .exp-detail-header h3 { color: #ffffff; }
+    body .exp-detail-header .detail-icon { border-color: #86efac; }
+    body .exp-detail-header .detail-sub { color: #86efac; }
+    body .exp-detail-desc { color: #d1fae5; }
+    body .gallery-label { color: #86efac; }
+    body .photo-box { background: rgba(0,0,0,0.4); border: 1px solid rgba(134,239,172,0.3); }
+    body .photo-flat-icon { color: #86efac; }
+    body .photo-flat-icon .file-name { color: #4a8a6a; }
+    body .photo-number { background: #000000; color: #86efac; border-color: #86efac; }
+    body .photo-caption { color: #ffffff; }
+    body .exp-detail-link { color: #86efac; border-color: #86efac; }
+    body .exp-detail-link:hover { background: #86efac; color: #000000; }
+    body .project-done-card { background: rgba(20,20,20,0.75); border: 1px solid rgba(255,255,255,0.1); }
+    body .project-done-card:hover { background: rgba(30,30,30,0.9); border-color: var(--pc-color, #86efac); }
+    body .project-done-content h3 { color: #ffffff; }
+    body .project-done-content .project-number { background: rgba(255,255,255,0.08); color: var(--pc-color, #86efac); border-color: var(--pc-color, rgba(134,239,172,0.3)); }
+    body .project-done-content .project-link { color: var(--pc-color, #86efac); }
+    body .projects-conclusion { background: rgba(20,20,20,0.85); border: 1px solid rgba(134,239,172,0.4); }
+    body .projects-conclusion h3 { color: #ffffff; }
+    body .projects-conclusion h3 i { color: #86efac; }
+    body .projects-conclusion p { color: #b8cfe3; }
+    body .projects-conclusion p strong { color: #ffffff; }
+    body .projects-conclusion .conclusion-tags span { background: rgba(134,239,172,0.1); color: #ffffff; border: 1px solid rgba(134,239,172,0.35); }
+    body .project-card { background: rgba(20,20,20,0.75); border: 1px solid rgba(255,255,255,0.1); }
+    body .project-card:hover { background: rgba(30,30,30,0.9); border-color: var(--pj-color, #86efac); }
+    body .project-content h3 { color: #ffffff; }
+    body .project-content p { color: #8ba9c0; }
+    body .project-tags span { background: rgba(255,255,255,0.08); color: #ffffff; border: 1px solid rgba(255,255,255,0.12); }
+    body .project-tags span.ai-tag { background: rgba(134,239,172,0.15); color: #86efac; border-color: rgba(134,239,172,0.3); }
+    body .skill-card { background: rgba(20,20,20,0.85); border: 1px solid rgba(255,255,255,0.1); }
+    body .skill-card:hover { background: rgba(30,30,30,0.95); }
+    body .skill-card h3 { color: #ffffff; }
+    body .skill-card p { color: #8ba9c0; }
+    body .skill-card .level { background: rgba(255,255,255,0.08); }
+    body .timeline::before { background: linear-gradient(180deg, #ffffff, #86efac, #4ade80, transparent); }
+    body .timeline-item { background: rgba(20,20,20,0.75); border: 1px solid rgba(255,255,255,0.1); }
+    body .timeline-item:hover { background: rgba(30,30,30,0.9); border-color: var(--tl-color, #86efac); }
+    body .timeline-item::before { background: var(--tl-color, #86efac); border: 3px solid #0a0a0a; }
+    body .timeline-item .date { background: rgba(255,255,255,0.06); color: #ffffff; border: 1px solid var(--tl-color, rgba(255,255,255,0.15)); }
+    body .timeline-item h3 { color: #ffffff; }
+    body .timeline-item .subtitle { color: var(--tl-color, #86efac); }
+    body .timeline-item p { color: #8ba9c0; }
+    body .timeline-item .badge-list span { background: rgba(255,255,255,0.06); color: #ffffff; border: 1px solid rgba(255,255,255,0.12); }
+    body .about-text p { color: #b8cfe3; }
+    body .about-text p strong { color: #ffffff; }
+    body .about-text a { color: #ffffff; border-bottom: 2px solid rgba(134,239,172,0.5); }
+    body .about-text a i { color: #86efac; }
+    body .about-text a:hover { color: #86efac; border-bottom-color: #86efac; }
+    body .about-photo-caption { color: #a7f3d0; }
+    body .about-photo-placeholder { color: #ffffff; }
+    body .about-photo-placeholder i { color: #86efac; }
+    body .about-highlight { background: rgba(20,20,20,0.75); border: 1px solid rgba(134,239,172,0.25); border-left: 5px solid #86efac; }
+    body .about-highlight h4 { color: #ffffff; }
+    body .about-highlight h4 i { color: #86efac; }
+    body .about-highlight p { color: #b8cfe3; }
+    body .terminal { background: rgba(10,10,10,0.95); border: 1px solid rgba(134,239,172,0.25); }
+    body .terminal-header { background: #0f0f0f; border-bottom: 1px solid rgba(134,239,172,0.15); }
+    body .terminal-title { color: #86efac; }
+    body .terminal-body { color: #d0e0ee; }
+    body .terminal-body .prompt { color: #22c55e; }
+    body .terminal-body .cmd { color: #ffffff; }
+    body .terminal-body .comment { color: #64748b; }
+    body .terminal-body .ai-output { color: #86efac; }
+    body .terminal-body .cursor { background: #86efac; }
+    body .social-section { background: rgba(20,20,20,0.5); border: 1px solid rgba(134,239,172,0.2); }
+    body .social-city { background: rgba(15,15,15,0.5); border: 1px solid rgba(134,239,172,0.1); }
+    body .social-body { background: rgba(20,20,20,0.8); }
+    body .social-name { color: #ffffff; }
+    body .social-handle { color: #8ba9c0; }
+    body .avatar-main { background: rgba(134,239,172,0.05); border: 1px solid rgba(134,239,172,0.25); }
+    body .avatar-photo { border: 3px solid rgba(134,239,172,0.4); }
+    body .avatar-photo .avatar-placeholder { color: #ffffff; }
+    body .avatar-photo .avatar-placeholder small { color: #8ba9c0; }
+    body .ai-float-badge { background: rgba(15,15,15,0.9); color: #ffffff; border: 1px solid rgba(134,239,172,0.3); }
+    body .ai-float-badge.bottom { color: #86efac; border-color: rgba(134,239,172,0.4); }
+    body .particle { background: rgba(255,255,255,0.5); }
+    body .particle.dark { background: rgba(0,0,0,0.8); }
+    body footer { background: #000000; color: #ffffff; border-top: 1px solid rgba(134,239,172,0.2); }
+
+    body .video-box { background: rgba(0,0,0,0.55); border: 1px solid rgba(134,239,172,0.35); }
+    body .video-caption { color: #ffffff; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.92) 100%); }
+    body .video-number { background: #000000; color: #86efac; border-color: #86efac; }
+    body .video-flat-icon { color: #86efac; }
+    body .video-flat-icon .file-name { color: #4a8a6a; }
+
+    body .senior-pair { background: rgba(20,20,20,0.65); border: 1px solid rgba(134,239,172,0.22); }
+    body .senior-inline { background: rgba(15,15,15,0.6); border: 1px solid rgba(255,255,255,0.08); }
+    body .senior-inline:hover { border-color: #86efac; }
+    body .senior-inline h3 { color: #ffffff; }
+    body .senior-inline .senior-role { color: #86efac; }
+    body .senior-inline p { color: #b8cfe3; }
+    body .senior-inline .senior-tags span { background: rgba(255,255,255,0.06); color: #ffffff; border: 1px solid rgba(255,255,255,0.12); }
+    body .senior-photo-frame { border: 2px solid rgba(134,239,172,0.6); background: rgba(0,0,0,0.4); }
+    body .senior-photo-placeholder { color: #ffffff; }
+    body .senior-photo-placeholder i { color: #86efac; }
+    body .senior-video-wrap { background: #000; border: 1px solid rgba(134,239,172,0.3); }
+
+    /* ===== FLOATING BUTTONS ===== */
+    body .float-buttons {
+      position: fixed;
+      left: 20px;
+      bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 900;
+    }
+    body .float-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: #ffffff;
+      box-shadow: 0 4px 14px -4px rgba(0,0,0,0.4);
+      transition: all 0.3s ease;
+      position: relative;
+      text-decoration: none;
+      opacity: 0.35;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    body .float-btn:hover {
+      opacity: 1;
+      transform: translateY(-3px) scale(1.08);
+      box-shadow: 0 8px 24px -4px rgba(124, 58, 237, 0.65);
+    }
+    body .float-btn:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+    body .float-btn.lang-btn {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.85), rgba(79, 70, 229, 0.85));
+    }
+    body .float-btn.lang-btn:hover {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    }
+    body .float-btn .float-label {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      font-size: 0.55rem;
+      font-weight: 800;
+      background: #facc15;
+      color: #0a0a0a;
+      padding: 2px 6px;
+      border-radius: 8px;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      line-height: 1;
+    }
+    body .float-btn .float-tooltip {
+      position: absolute;
+      left: calc(100% + 12px);
+      top: 50%;
+      transform: translateY(-50%) translateX(-6px);
+      background: rgba(15,15,15,0.95);
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 10px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+      border: 1px solid rgba(134,239,172,0.3);
+      pointer-events: none;
+      box-shadow: 0 6px 16px -4px rgba(0,0,0,0.5);
+      font-family: 'Times New Roman', Times, serif;
+    }
+    body .float-btn:hover .float-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-50%) translateX(0);
+    }
+
+    body.light-theme .float-btn .float-tooltip {
+      background: rgba(255,255,255,0.98);
+      color: #0f2e1a;
+      border: 1px solid rgba(22,163,74,0.3);
+    }
+
+    @media (max-width: 600px) {
+      body .float-buttons { left: 14px; bottom: 14px; gap: 10px; }
+      body .float-btn { width: 50px; height: 50px; font-size: 1.2rem; }
+      body .float-btn .float-tooltip { display: none; }
+      body .float-btn { opacity: 0.4; }
+      body .float-btn:hover { opacity: 1; }
+    }
+
+    /* ===== HERO WHATSAPP BUTTON ===== */
+    .hero-cta-wrap {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+    .wa-round-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #ffffff;
+      font-size: 1.5rem;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 6px 20px -4px rgba(37, 211, 102, 0.6);
+      transition: all 0.25s ease;
+      animation: waPulse 2s ease-in-out infinite;
+      border: none;
+      flex-shrink: 0;
+    }
+    .wa-round-btn:hover {
+      transform: translateY(-3px) scale(1.08);
+      box-shadow: 0 10px 28px -4px rgba(37, 211, 102, 0.8);
+    }
+    .wa-round-btn .wa-tip {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: rgba(15,15,15,0.95);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 8px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+      border: 1px solid rgba(134,239,172,0.3);
+      pointer-events: none;
+      font-family: 'Times New Roman', Times, serif;
+    }
+    .wa-round-btn:hover .wa-tip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+    body.light-theme .wa-round-btn .wa-tip {
+      background: rgba(255,255,255,0.98);
+      color: #0f2e1a;
+      border: 1px solid rgba(22,163,74,0.3);
+    }
+    @keyframes waPulse {
+      0%, 100% { box-shadow: 0 6px 20px -4px rgba(37, 211, 102, 0.6), 0 0 0 0 rgba(37, 211, 102, 0.5); }
+      50% { box-shadow: 0 6px 20px -4px rgba(37, 211, 102, 0.6), 0 0 0 12px rgba(37, 211, 102, 0); }
+    }
+
+    /* ===== MARQUEE EXPERIENCE (drag & swipe) ===== */
+    .exp-marquee-wrap {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 22px;
+      padding: 26px 0;
+      margin-bottom: 32px;
+      background: rgba(20,20,20,0.55);
+      border: 1px solid rgba(134,239,172,0.28);
+      backdrop-filter: blur(8px);
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: pan-y;
+    }
+    .exp-marquee-wrap.dragging {
+      cursor: grabbing;
+      border-color: #86efac;
+      box-shadow: 0 0 25px -5px rgba(134,239,172,0.5);
+    }
+    .exp-marquee-wrap::before,
+    .exp-marquee-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .exp-marquee-wrap::before {
+      left: 0;
+      background: linear-gradient(90deg, rgba(20,20,20,0.95), transparent);
+    }
+    .exp-marquee-wrap::after {
+      right: 0;
+      background: linear-gradient(270deg, rgba(20,20,20,0.95), transparent);
+    }
+
+    .exp-marquee-track {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      width: max-content;
+      animation: marqueeScroll 40s linear infinite;
+      will-change: transform;
+    }
+    .exp-marquee-wrap:hover .exp-marquee-track {
+      animation-play-state: paused;
+    }
+    .exp-marquee-wrap.dragging .exp-marquee-track {
+      animation-play-state: paused;
+    }
+    @keyframes marqueeScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .exp-marquee-item {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      padding: 12px 22px;
+      border-radius: 16px;
+      background: rgba(15,15,15,0.6);
+      border: 1px solid rgba(134,239,172,0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      text-decoration: none;
+      min-width: 240px;
+    }
+    .exp-marquee-item:hover {
+      background: rgba(134,239,172,0.12);
+      border-color: #86efac;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px -6px rgba(134,239,172,0.45);
+    }
+    .exp-marquee-item.active {
+      background: rgba(134,239,172,0.16);
+      border-color: #86efac;
+      box-shadow: 0 0 25px -5px rgba(134,239,172,0.55);
+    }
+    .exp-marquee-item i.marquee-icon {
+      font-size: 1.7rem;
+      color: #86efac;
+      flex-shrink: 0;
+    }
+    .exp-marquee-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .exp-marquee-text h3 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+    .exp-marquee-text span {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #86efac;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .exp-marquee-sep {
+      flex-shrink: 0;
+      font-size: 0.5rem;
+      color: rgba(134,239,172,0.4);
+      user-select: none;
+    }
+
+    .exp-marquee-underline {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, transparent, #86efac, #4ade80, #86efac, transparent);
+      background-size: 200% 100%;
+      animation: underlineFlow 6s linear infinite;
+      opacity: 0.85;
+      z-index: 2;
+    }
+    @keyframes underlineFlow {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    /* Hint drag */
+    .exp-marquee-hint {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      z-index: 4;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #86efac;
+      background: rgba(15,15,15,0.85);
+      border: 1px solid rgba(134,239,172,0.35);
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      pointer-events: none;
+      opacity: 0.75;
+      transition: opacity 0.3s ease;
+    }
+    .exp-marquee-wrap.dragging .exp-marquee-hint { opacity: 0; }
+
+    body.light-theme .exp-marquee-hint {
+      background: rgba(255,255,255,0.95);
+      color: #16a34a;
+      border-color: rgba(22,163,74,0.4);
+    }
+
+    body.light-theme .exp-marquee-wrap {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(22,163,74,0.28);
+    }
+    body.light-theme .exp-marquee-wrap::before {
+      background: linear-gradient(90deg, rgba(255,255,255,0.95), transparent);
+    }
+    body.light-theme .exp-marquee-wrap::after {
+      background: linear-gradient(270deg, rgba(255,255,255,0.95), transparent);
+    }
+    body.light-theme .exp-marquee-item {
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(22,163,74,0.3);
+    }
+    body.light-theme .exp-marquee-item:hover {
+      background: rgba(22,163,74,0.1);
+      border-color: #16a34a;
+      box-shadow: 0 8px 22px -6px rgba(22,163,74,0.4);
+    }
+    body.light-theme .exp-marquee-item.active {
+      background: rgba(22,163,74,0.15);
+      border-color: #16a34a;
+      box-shadow: 0 0 25px -5px rgba(22,163,74,0.5);
+    }
+    body.light-theme .exp-marquee-item i.marquee-icon { color: #16a34a; }
+    body.light-theme .exp-marquee-text h3 { color: #0f2e1a; }
+    body.light-theme .exp-marquee-text span { color: #16a34a; }
+    body.light-theme .exp-marquee-sep { color: rgba(22,163,74,0.4); }
+    body.light-theme .exp-marquee-underline {
+      background: linear-gradient(90deg, transparent, #16a34a, #22c55e, #16a34a, transparent);
+      background-size: 200% 100%;
+    }
+
+    @media (max-width: 600px) {
+      .exp-marquee-wrap { padding: 18px 0; border-radius: 18px; }
+      .exp-marquee-track { gap: 18px; animation-duration: 30s; }
+      .exp-marquee-item { padding: 10px 16px; min-width: 190px; gap: 10px; }
+      .exp-marquee-item i.marquee-icon { font-size: 1.4rem; }
+      .exp-marquee-text h3 { font-size: 0.9rem; }
+      .exp-marquee-text span { font-size: 0.65rem; }
+      .exp-marquee-wrap::before,
+      .exp-marquee-wrap::after { width: 50px; }
+      .exp-marquee-hint { font-size: 0.58rem; top: 6px; right: 8px; }
+    }
+
+    /* ===== TEMA TERANG ===== */
+    body.light-theme { background: #f0f4f8; color: #1a2a3a; }
+    body.light-theme .bg-base {
+      background:
+        radial-gradient(circle at 20% 15%, #e8eef5 0%, transparent 50%),
+        radial-gradient(circle at 80% 25%, #dce4ee 0%, transparent 50%),
+        radial-gradient(circle at 50% 85%, #e2eaf2 0%, transparent 55%),
+        linear-gradient(160deg, #f0f4f8 0%, #e2eaf2 40%, #f0f4f8 70%, #dce4ee 100%);
+    }
+    body.light-theme .bg-white-aurora-1,
+    body.light-theme .bg-white-aurora-2,
+    body.light-theme .bg-white-aurora-3 { opacity: 0.3; background: radial-gradient(circle, rgba(0,0,0,0.05) 0%, transparent 60%); }
+    body.light-theme .bg-color-aurora-1 { background: radial-gradient(circle, rgba(125,211,252,0.15) 0%, transparent 60%); }
+    body.light-theme .bg-color-aurora-2 { background: radial-gradient(circle, rgba(196,181,253,0.15) 0%, transparent 60%); }
+    body.light-theme .bg-grid {
+      background-image: linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px);
+    }
+    body.light-theme .bg-vignette { background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(255,255,255,0.5) 100%); }
+    body.light-theme header { background-color: rgba(255,255,255,0.9); border-bottom: 1px solid rgba(0,0,0,0.1); }
+    body.light-theme .logo { background: linear-gradient(135deg, #0f2e1a, #16a34a, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    body.light-theme .logo small { color: #4a6a8a; -webkit-text-fill-color: #4a6a8a; }
+    body.light-theme .hamburger span { background: #1a2a3a; }
+    body.light-theme .icon-btn { border-color: rgba(0,0,0,0.2); color: #1a2a3a; }
+    body.light-theme .icon-btn:hover { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.4); }
+    body.light-theme .nav-menu { background: #ffffff; border-left: 1px solid rgba(0,0,0,0.1); }
+    body.light-theme .nav-menu ul li a { color: #2a4a6a; }
+    body.light-theme .nav-menu ul li a i { color: #1a2a3a; }
+    body.light-theme .nav-menu ul li a:hover { background: rgba(22,163,74,0.10); color: #0f2e1a; }
+    body.light-theme .nav-menu ul li a:hover i { color: #16a34a; }
+    body.light-theme .submenu li a { color: #5a7a9a !important; }
+    body.light-theme .submenu li a i { color: #4a6a8a !important; }
+    body.light-theme .submenu li a:hover { background: rgba(22,163,74,0.08) !important; color: #0f2e1a !important; }
+    body.light-theme .overlay { background: rgba(255,255,255,0.6); }
+    body.light-theme .hero-badge { background: rgba(22,163,74,0.1); color: #0f2e1a; border: 1px solid rgba(22,163,74,0.4); }
+    body.light-theme .hero h1 { color: #0f2e1a; }
+    body.light-theme .hero h1 .highlight { color: #0f2e1a; border-bottom: 4px solid rgba(22,163,74,0.6); }
+    body.light-theme .hero p { color: #2a4a6a; }
+    body.light-theme .hero p strong { color: #0f2e1a; }
+    body.light-theme .stat-item h3 { color: #0f2e1a; }
+    body.light-theme .stat-item p { color: #4a6a8a; }
+    body.light-theme .section-header h2 { color: #0f2e1a; }
+    body.light-theme .section-header p { color: #4a6a8a; }
+    body.light-theme .divider { background: linear-gradient(90deg, #0f2e1a, #16a34a, #22c55e); }
+    body.light-theme .experience-pro { background: rgba(255,255,255,0.6); border: 1px solid rgba(22,163,74,0.3); }
+    body.light-theme .exp-detail { background: rgba(255,255,255,0.95); border: 1px solid rgba(22,163,74,0.35); }
+    body.light-theme .exp-detail-header { border-bottom: 1px solid rgba(22,163,74,0.2); }
+    body.light-theme .exp-detail-header h3 { color: #0f2e1a; }
+    body.light-theme .exp-detail-header .detail-icon { border-color: #16a34a; }
+    body.light-theme .exp-detail-header .detail-sub { color: #16a34a; }
+    body.light-theme .exp-detail-desc { color: #2a4a6a; }
+    body.light-theme .gallery-label { color: #16a34a; }
+    body.light-theme .photo-box { background: #e8eef5; border: 1px solid rgba(22,163,74,0.35); }
+    body.light-theme .photo-flat-icon { color: #16a34a; }
+    body.light-theme .photo-flat-icon .file-name { color: #4a6a8a; }
+    body.light-theme .photo-number { background: #ffffff; color: #16a34a; border-color: #16a34a; }
+    body.light-theme .photo-caption { color: #ffffff; }
+    body.light-theme .exp-detail-link { color: #16a34a; border-color: #16a34a; }
+    body.light-theme .exp-detail-link:hover { background: #16a34a; color: #ffffff; }
+    body.light-theme .project-done-card { background: rgba(255,255,255,0.85); border: 1px solid rgba(0,0,0,0.08); }
+    body.light-theme .project-done-card:hover { background: #ffffff; border-color: var(--pc-color, #16a34a); }
+    body.light-theme .project-done-content h3 { color: #0f2e1a; }
+    body.light-theme .project-done-content .project-number { background: rgba(22,163,74,0.1); color: #16a34a; border-color: rgba(22,163,74,0.3); }
+    body.light-theme .project-done-content .project-link { color: #16a34a; }
+    body.light-theme .projects-conclusion { background: rgba(255,255,255,0.9); border: 1px solid rgba(22,163,74,0.4); }
+    body.light-theme .projects-conclusion h3 { color: #0f2e1a; }
+    body.light-theme .projects-conclusion h3 i { color: #16a34a; }
+    body.light-theme .projects-conclusion p { color: #2a4a6a; }
+    body.light-theme .projects-conclusion p strong { color: #0f2e1a; }
+    body.light-theme .projects-conclusion .conclusion-tags span { background: rgba(22,163,74,0.1); color: #0f2e1a; border: 1px solid rgba(22,163,74,0.3); }
+    body.light-theme .project-card { background: rgba(255,255,255,0.85); border: 1px solid rgba(0,0,0,0.08); }
+    body.light-theme .project-card:hover { background: #ffffff; border-color: var(--pj-color, #16a34a); }
+    body.light-theme .project-content h3 { color: #0f2e1a; }
+    body.light-theme .project-content p { color: #4a6a8a; }
+    body.light-theme .project-tags span { background: rgba(22,163,74,0.08); color: #0f2e1a; border: 1px solid rgba(22,163,74,0.2); }
+    body.light-theme .project-tags span.ai-tag { background: rgba(22,163,74,0.15); color: #16a34a; border-color: rgba(22,163,74,0.3); }
+    body.light-theme .skill-card { background: rgba(255,255,255,0.85); border: 1px solid rgba(0,0,0,0.08); }
+    body.light-theme .skill-card:hover { background: #ffffff; border-color: var(--sk-color, #16a34a); }
+    body.light-theme .skill-card h3 { color: #0f2e1a; }
+    body.light-theme .skill-card p { color: #4a6a8a; }
+    body.light-theme .skill-card .level { background: rgba(0,0,0,0.08); }
+    body.light-theme .skill-card i { color: #0f2e1a; }
+    body.light-theme .timeline::before { background: linear-gradient(180deg, #0f2e1a, #16a34a, #22c55e, transparent); }
+    body.light-theme .timeline-item { background: rgba(255,255,255,0.85); border: 1px solid rgba(0,0,0,0.08); }
+    body.light-theme .timeline-item:hover { background: #ffffff; border-color: var(--tl-color, #16a34a); }
+    body.light-theme .timeline-item::before { background: var(--tl-color, #16a34a); border: 3px solid #ffffff; }
+    body.light-theme .timeline-item .date { background: rgba(22,163,74,0.1); color: #0f2e1a; border: 1px solid var(--tl-color, rgba(22,163,74,0.3)); }
+    body.light-theme .timeline-item h3 { color: #0f2e1a; }
+    body.light-theme .timeline-item .subtitle { color: var(--tl-color, #16a34a); }
+    body.light-theme .timeline-item p { color: #4a6a8a; }
+    body.light-theme .timeline-item .badge-list span { background: rgba(22,163,74,0.08); color: #0f2e1a; border: 1px solid rgba(22,163,74,0.2); }
+
+    body.light-theme .about-text p { color: #f0f7ff; text-shadow: 0 1px 4px rgba(0,0,0,0.85), 0 0 12px rgba(0,0,0,0.6); }
+    body.light-theme .about-text p strong { color: #ffffff; text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 12px rgba(0,0,0,0.7); }
+    body.light-theme .about-text a { color: #ffffff; border-bottom: 2px solid rgba(134,239,172,0.8); text-shadow: 0 1px 4px rgba(0,0,0,0.85); }
+    body.light-theme .about-text a i { color: #86efac; text-shadow: 0 1px 4px rgba(0,0,0,0.85); }
+    body.light-theme .about-text a:hover { color: #86efac; border-bottom-color: #86efac; }
+    body.light-theme .about-photo-caption { color: #ffffff; text-shadow: 0 1px 4px rgba(0,0,0,0.85), 0 0 10px rgba(0,0,0,0.6); }
+    body.light-theme .about-photo-placeholder { color: #ffffff; text-shadow: 0 1px 4px rgba(0,0,0,0.85); }
+    body.light-theme .about-photo-placeholder i { color: #86efac; text-shadow: 0 1px 4px rgba(0,0,0,0.85); }
+    body.light-theme .about-highlight { background: rgba(0,0,0,0.55); border: 1px solid rgba(134,239,172,0.4); border-left: 5px solid #86efac; }
+    body.light-theme .about-highlight h4 { color: #ffffff; text-shadow: 0 1px 4px rgba(0,0,0,0.85); }
+    body.light-theme .about-highlight h4 i { color: #86efac; text-shadow: 0 1px 4px rgba(0,0,0,0.85); }
+    body.light-theme .about-highlight p { color: #e2eaf2; text-shadow: 0 1px 4px rgba(0,0,0,0.85); }
+    body.light-theme #about .section-header h2 { color: #ffffff; text-shadow: 0 2px 6px rgba(0,0,0,0.9), 0 0 14px rgba(0,0,0,0.7); }
+    body.light-theme #about .section-header .divider { background: linear-gradient(90deg, #ffffff, #86efac, #22c55e); }
+    body.light-theme .terminal { background: rgba(255,255,255,0.95); border: 1px solid rgba(22,163,74,0.25); }
+    body.light-theme .terminal-header { background: #e8eef5; border-bottom: 1px solid rgba(22,163,74,0.15); }
+    body.light-theme .terminal-title { color: #16a34a; }
+    body.light-theme .terminal-body { color: #0f2e1a; }
+    body.light-theme .terminal-body .prompt { color: #16a34a; }
+    body.light-theme .terminal-body .cmd { color: #0f2e1a; }
+    body.light-theme .terminal-body .comment { color: #6a8aaa; }
+    body.light-theme .terminal-body .ai-output { color: #16a34a; }
+    body.light-theme .terminal-body .cursor { background: #16a34a; }
+    body.light-theme .social-section { background: rgba(255,255,255,0.8); border: 1px solid rgba(22,163,74,0.2); }
+    body.light-theme .social-city { background: rgba(240,244,248,0.7); border: 1px solid rgba(22,163,74,0.15); }
+    body.light-theme .social-body { background: rgba(255,255,255,0.9); }
+    body.light-theme .social-name { color: #0f2e1a; }
+    body.light-theme .social-handle { color: #4a6a8a; }
+    body.light-theme .avatar-main { background: rgba(22,163,74,0.08); border: 1px solid rgba(22,163,74,0.3); }
+    body.light-theme .avatar-photo { border: 3px solid rgba(22,163,74,0.4); background: #e8eef5; }
+    body.light-theme .avatar-photo .avatar-placeholder { color: #0f2e1a; background: #e8eef5; }
+    body.light-theme .avatar-photo .avatar-placeholder small { color: #4a6a8a; }
+    body.light-theme .ai-float-badge { background: rgba(255,255,255,0.95); color: #0f2e1a; border: 1px solid rgba(22,163,74,0.3); }
+    body.light-theme .ai-float-badge.bottom { color: #16a34a; border-color: rgba(22,163,74,0.4); }
+    body.light-theme .particle { background: rgba(0,0,0,0.3); }
+    body.light-theme .particle.dark { background: rgba(255,255,255,0.8); }
+    body.light-theme footer { background: #ffffff; color: #0f2e1a; border-top: 1px solid rgba(22,163,74,0.3); }
+    body.light-theme footer p { color: #0f2e1a; }
+    body.light-theme .btn-primary { background: linear-gradient(135deg, #ffffff, #86efac); color: #0f2e1a; border: 1.5px solid rgba(22,163,74,0.5); }
+    body.light-theme .section-with-photo-bg { background-color: rgba(240, 244, 248, 0.92); }
+    body.light-theme .section-with-photo-bg::before { background: linear-gradient(180deg, rgba(240,244,248,0.85) 0%, rgba(240,244,248,0.92) 50%, rgba(240,244,248,0.85) 100%); }
+
+    body.light-theme .video-box { background: #e8eef5; border: 1px solid rgba(22,163,74,0.35); }
+    body.light-theme .video-flat-icon { color: #16a34a; }
+    body.light-theme .video-flat-icon .file-name { color: #4a6a8a; }
+    body.light-theme .video-number { background: #ffffff; color: #16a34a; border-color: #16a34a; }
+
+    body.light-theme .senior-pair { background: rgba(255,255,255,0.85); border: 1px solid rgba(22,163,74,0.25); }
+    body.light-theme .senior-inline { background: rgba(255,255,255,0.9); border: 1px solid rgba(0,0,0,0.08); }
+    body.light-theme .senior-inline:hover { border-color: #16a34a; }
+    body.light-theme .senior-inline h3 { color: #0f2e1a; }
+    body.light-theme .senior-inline .senior-role { color: #16a34a; }
+    body.light-theme .senior-inline p { color: #2a4a6a; }
+    body.light-theme .senior-inline .senior-tags span { background: rgba(22,163,74,0.08); color: #0f2e1a; border: 1px solid rgba(22,163,74,0.2); }
+    body.light-theme .senior-photo-frame { border: 2px solid rgba(22,163,74,0.6); background: #e8eef5; }
+    body.light-theme .senior-photo-placeholder { color: #0f2e1a; }
+    body.light-theme .senior-photo-placeholder i { color: #16a34a; }
+    body.light-theme .senior-video-wrap { background: #000; border: 1px solid rgba(22,163,74,0.35); }
+
+    /* ===== BACKGROUND ===== */
+    .bg-base { position: fixed; inset: 0; z-index: -7; background-attachment: fixed; width: 100%; height: 100%; overflow: hidden; }
+    .bg-white-aurora-1 { position: fixed; top: -30%; left: -20%; width: 80vw; height: 80vw; border-radius: 50%; filter: blur(100px); z-index: -6; pointer-events: none; }
+    .bg-white-aurora-2 { position: fixed; bottom: -35%; right: -20%; width: 75vw; height: 75vw; border-radius: 50%; filter: blur(110px); z-index: -6; pointer-events: none; }
+    .bg-white-aurora-3 { position: fixed; top: 35%; left: 25%; width: 60vw; height: 60vw; border-radius: 50%; filter: blur(120px); z-index: -6; pointer-events: none; }
+    .bg-color-aurora-1 { position: fixed; top: -20%; left: -10%; width: 65vw; height: 65vw; border-radius: 50%; filter: blur(90px); z-index: -5; pointer-events: none; }
+    .bg-color-aurora-2 { position: fixed; bottom: -25%; right: -10%; width: 60vw; height: 60vw; border-radius: 50%; filter: blur(100px); z-index: -5; pointer-events: none; }
+    .bg-grid { position: fixed; inset: 0; z-index: -4; pointer-events: none; background-size: 50px 50px; mask-image: radial-gradient(circle at 50% 40%, #000 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at 50% 40%, #000 0%, transparent 80%); }
+    .bg-rotate { display: none; }
+    .particles { position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; width: 100%; height: 100%; }
+    .particle { position: absolute; width: 3px; height: 3px; border-radius: 50%; animation: particleFloat linear infinite; }
+    .particle.dark { width: 4px; height: 4px; }
+    .particle:nth-child(1){left:8%;bottom:-10%;animation-duration:18s;animation-delay:0s;}
+    .particle:nth-child(2){left:22%;bottom:-10%;animation-duration:22s;animation-delay:2s;}
+    .particle:nth-child(3){left:35%;bottom:-10%;animation-duration:26s;animation-delay:4s;}
+    .particle:nth-child(4){left:48%;bottom:-10%;animation-duration:20s;animation-delay:1s;}
+    .particle:nth-child(5){left:62%;bottom:-10%;animation-duration:24s;animation-delay:3s;}
+    .particle:nth-child(6){left:75%;bottom:-10%;animation-duration:28s;animation-delay:5s;}
+    .particle:nth-child(7){left:88%;bottom:-10%;animation-duration:30s;animation-delay:6s;}
+    .particle:nth-child(8){left:15%;bottom:-10%;animation-duration:21s;animation-delay:7s;}
+    .particle:nth-child(9){left:55%;bottom:-10%;animation-duration:25s;animation-delay:8s;}
+    .particle:nth-child(10){left:95%;bottom:-10%;animation-duration:23s;animation-delay:9s;}
+    @keyframes particleFloat { 0%{transform:translateY(0) translateX(0);opacity:0;} 10%{opacity:1;} 90%{opacity:1;} 100%{transform:translateY(-110vh) translateX(60px);opacity:0;} }
+    .bg-vignette { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      box-sizing: border-box;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: sticky; top: 0; z-index: 100;
+      transition: background 0.4s ease, border-color 0.4s ease;
+      width: 100%;
+    }
+    header .container { display: flex; justify-content: center; }
+    header nav { width: 100%; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; }
+    .logo { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; font-family: 'Times New Roman', Times, serif; transition: all 0.4s ease; }
+    .logo small { display: block; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.4px; margin-top: -2px; }
+    .nav-actions { display: flex; align-items: center; gap: 18px; }
+    .icon-btn { background: transparent; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: all 0.25s ease; }
+    .hamburger { display: flex; flex-direction: column; justify-content: space-between; width: 32px; height: 24px; cursor: pointer; background: transparent; border: none; padding: 0; z-index: 110; }
+    .hamburger span { display: block; height: 3px; width: 100%; border-radius: 3px; transition: all 0.3s ease; transform-origin: center; }
+    .hamburger.active span:nth-child(1) { transform: translateY(10.5px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.active span:nth-child(3) { transform: translateY(-10.5px) rotate(-45deg); }
+
+    /* ===== NAV MENU ===== */
+    .nav-menu { position: fixed; top: 0; right: -100%; width: 340px; max-width: 85vw; height: 100vh; backdrop-filter: blur(18px); box-shadow: -20px 0 50px -20px rgba(0,0,0,0.5); padding: 110px 40px 40px; transition: right 0.4s cubic-bezier(0.77,0,0.175,1); z-index: 105; display: flex; flex-direction: column; overflow-y: auto; box-sizing: border-box; }
+    .nav-menu.active { right: 0; }
+    .nav-menu ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .nav-menu ul li a { display: flex; align-items: center; gap: 16px; padding: 16px 18px; border-radius: 16px; text-decoration: none; font-weight: 600; font-size: 1.05rem; transition: all 0.25s ease; }
+    .nav-menu ul li a i { width: 24px; font-size: 1.15rem; text-align: center; transition: transform 0.25s ease; }
+    .nav-menu ul li a:hover { transform: translateX(6px); }
+    .skill-toggle { display: flex !important; justify-content: space-between; cursor: pointer; }
+    .skill-toggle .arrow { font-size: 0.85rem; transition: transform 0.3s ease; }
+    .skill-toggle.open .arrow { transform: rotate(180deg); }
+    .submenu { list-style: none; max-height: 0; overflow: hidden; transition: max-height 0.4s ease; padding-left: 0; display: flex; flex-direction: column; gap: 4px; }
+    .submenu.open { max-height: 400px; }
+    .submenu li a { padding: 12px 18px 12px 58px !important; font-size: 0.95rem !important; font-weight: 500 !important; border-radius: 12px !important; }
+    .submenu li a i { font-size: 0.9rem !important; width: 20px !important; }
+    .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; backdrop-filter: blur(4px); opacity: 0; visibility: hidden; transition: all 0.4s ease; z-index: 102; }
+    .overlay.active { opacity: 1; visibility: visible; }
+
+    /* ===== HERO ===== */
+    .hero { padding: 80px 0 60px; width: 100%; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 50px; align-items: center; width: 100%; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; padding: 6px 16px; border-radius: 40px; margin-bottom: 20px; letter-spacing: 0.3px; }
+    .hero-badge .pulse-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 1.8s infinite; }
+    @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(34,197,94,0.5);} 70%{box-shadow:0 0 0 8px rgba(34,197,94,0);} 100%{box-shadow:0 0 0 0 rgba(34,197,94,0);} }
+    .hero h1 { font-size: 3.3rem; font-weight: 800; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 20px; transition: color 0.4s ease; }
+    .hero h1 .highlight { padding-bottom: 4px; }
+    .hero p { font-size: 1.1rem; margin-bottom: 32px; max-width: 95%; font-weight: 400; transition: color 0.4s ease; }
+    .hero-stats { display: flex; gap: 40px; margin-top: 45px; }
+    .stat-item h3 { font-size: 1.9rem; font-weight: 700; }
+    .stat-item p { font-size: 0.9rem; margin-bottom: 0; font-weight: 500; }
+    .btn-primary { padding: 12px 30px; border-radius: 40px; font-weight: 700; transition: all 0.2s ease; cursor: pointer; font-size: 0.95rem; }
+    .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+    /* ===== HERO AVATAR ===== */
+    .hero-avatar { position: relative; width: 100%; max-width: 460px; aspect-ratio: 1 / 1; margin: 0 auto; display: flex; justify-content: center; align-items: center; }
+    .avatar-orbit { position: absolute; inset: 0; border-radius: 50%; animation: orbitSpin 40s linear infinite; pointer-events: none; z-index: 5; }
+    @keyframes orbitSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .orbit-photo { position: absolute; width: 68px; height: 68px; border-radius: 50%; overflow: hidden; border: 3px solid rgba(134,239,172,0.9); background: linear-gradient(135deg, #1e4a6b, #7c3aed); opacity: 0; z-index: 6; }
+    .orbit-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .orbit-photo:nth-child(1) { top: -4%; left: 50%; margin-left: -34px; animation: photoAppear 10s ease-in-out infinite; animation-delay: 0s; }
+    .orbit-photo:nth-child(2) { top: 22%; right: -4%; animation: photoAppear 10s ease-in-out infinite; animation-delay: 2s; }
+    .orbit-photo:nth-child(3) { bottom: 4%; right: 14%; animation: photoAppear 10s ease-in-out infinite; animation-delay: 4s; }
+    .orbit-photo:nth-child(4) { bottom: 4%; left: 14%; animation: photoAppear 10s ease-in-out infinite; animation-delay: 6s; }
+    .orbit-photo:nth-child(5) { top: 22%; left: -4%; animation: photoAppear 10s ease-in-out infinite; animation-delay: 8s; }
+    @keyframes photoAppear { 0%, 100% { opacity: 0; transform: scale(0.5); } 15% { opacity: 1; transform: scale(1); } 35% { opacity: 1; transform: scale(1.08); } 55% { opacity: 0.85; transform: scale(1); } 75% { opacity: 0.35; transform: scale(0.9); } }
+    .avatar-main { position: relative; z-index: 3; border-radius: 50%; padding: 16px; display: flex; justify-content: center; align-items: center; }
+    .avatar-photo { width: 260px; height: 260px; border-radius: 50%; overflow: hidden; display: flex; justify-content: center; align-items: center; transition: transform 0.3s ease; position: relative; }
+    .avatar-photo:hover { transform: scale(1.02); }
+    .avatar-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .avatar-photo .avatar-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 4rem; font-weight: 700; text-align: center; gap: 8px; }
+    .avatar-photo .avatar-placeholder small { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.3px; padding: 0 10px; line-height: 1.3; }
+    .ai-float-badge { position: absolute; padding: 10px 18px; border-radius: 30px; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.85rem; animation: float 3s ease-in-out infinite; z-index: 10; }
+    .ai-float-badge.top { top: 10px; right: 10px; animation-delay: 0s; }
+    .ai-float-badge.bottom { bottom: 20px; left: 10px; animation-delay: 1.5s; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+    /* ===== SECTION ===== */
+    section { padding: 80px 0; width: 100%; }
+    .section-header { text-align: center; margin-bottom: 50px; }
+    .section-header h2 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; transition: color 0.4s ease; }
+    .section-header p { font-size: 1.05rem; max-width: 650px; margin: 0 auto; transition: color 0.4s ease; }
+    .divider { width: 70px; height: 4px; border-radius: 4px; margin: 16px auto 0; }
+
+    /* ===== PENGALAMAN 4 TAHUN ===== */
+    #pengalaman-4tahun { position: relative; isolation: isolate; }
+    #pengalaman-4tahun::before,
+    #pengalaman-4tahun::after { content: ''; position: absolute; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #86efac, transparent); z-index: 1; }
+    #pengalaman-4tahun::before { top: 0; }
+    #pengalaman-4tahun::after { bottom: 0; }
+
+    .experience-pro { position: relative; border-radius: 28px; padding: 50px 40px; transition: all 0.4s ease; width: 100%; }
+    .experience-pro::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 40px; right: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #86efac, #4ade80, transparent);
+      border-radius: 2px;
+    }
+    .exp-detail { border-radius: 20px; padding: 32px 34px; display: none; width: 100%; }
+    .exp-detail.show { display: block; animation: detailFadeIn 0.5s ease; }
+    @keyframes detailFadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    .exp-detail-header { display: flex; align-items: center; gap: 18px; padding-bottom: 20px; margin-bottom: 22px; flex-wrap: wrap; }
+    .exp-detail-header .detail-icon { width: 62px; height: 62px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.9rem; }
+    .exp-detail-header .detail-text { flex: 1; min-width: 200px; }
+    .exp-detail-header h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.01em; }
+    .exp-detail-header .detail-sub { font-size: 0.8rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+    .exp-detail-desc { font-size: 1rem; line-height: 1.8; margin-bottom: 26px; }
+
+    /* ===== GALERI ===== */
+    .gallery-label { display: flex; align-items: center; gap: 10px; font-size: 0.78rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+    .gallery-label::before, .gallery-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(134, 239, 172, 0.3), transparent); }
+    .photo-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; width: 100%; }
+    .photo-box { position: relative; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; cursor: pointer; transition: border-color 0.25s ease; display: flex; align-items: center; justify-content: center; }
+    .photo-flat-icon { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 0.7rem; font-weight: 600; text-align: center; padding: 12px; letter-spacing: 0.3px; }
+    .photo-flat-icon i { font-size: 2.2rem; opacity: 0.7; }
+    .photo-flat-icon .file-name { font-size: 0.6rem; word-break: break-all; line-height: 1.2; }
+    .photo-box img.photo-real { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 3; display: block; }
+    .photo-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.92) 100%); font-size: 0.7rem; font-weight: 700; padding: 20px 8px 8px; text-align: center; letter-spacing: 0.3px; z-index: 4; }
+    .photo-number { position: absolute; top: 8px; left: 8px; font-size: 0.62rem; font-weight: 800; padding: 3px 8px; border-radius: 10px; letter-spacing: 0.5px; z-index: 5; }
+    .photo-box .zoom-icon { position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; border-radius: 50%; background: rgba(0,0,0,0.75); border: 1px solid rgba(134, 239, 172, 0.4); display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 0.65rem; opacity: 0; transition: opacity 0.25s ease; z-index: 5; }
+    .photo-box:hover .zoom-icon { opacity: 1; }
+
+    /* ===== VIDEO BOX — TAMPILAN AWAL SEBAGAI IKON VIDEO ===== */
+    .video-box {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .video-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px -8px rgba(134,239,172,0.45);
+      border-color: #86efac;
+    }
+    .video-icon-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      height: 100%;
+      padding: 16px;
+      text-align: center;
+    }
+    .video-play-circle {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: rgba(134,239,172,0.15);
+      border: 2px solid #86efac;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      color: #86efac;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .video-play-circle::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(134,239,172,0.35);
+      animation: videoPulse 2s ease-in-out infinite;
+    }
+    @keyframes videoPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.15); opacity: 0.4; }
+    }
+    .video-box:hover .video-play-circle {
+      background: #86efac;
+      color: #0a0a0a;
+      transform: scale(1.08);
+    }
+    .video-icon-caption {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.3px;
+      line-height: 1.3;
+    }
+    .video-icon-file {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: #4a8a6a;
+      word-break: break-all;
+      line-height: 1.2;
+    }
+    .video-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.92) 100%); font-size: 0.8rem; font-weight: 700; padding: 22px 12px 10px; text-align: center; letter-spacing: 0.3px; z-index: 4; pointer-events: none; }
+    .video-number { position: absolute; top: 10px; left: 10px; font-size: 0.68rem; font-weight: 800; padding: 3px 9px; border-radius: 10px; letter-spacing: 0.5px; z-index: 5; }
+
+    /* ===== VIDEO FULLSCREEN OVERLAY ===== */
+    .video-lightbox { position: fixed; inset: 0; z-index: 9997; background: rgba(0,0,0,0.98); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.5s ease, visibility 0.5s ease; padding: 20px; }
+    .video-lightbox.show { opacity: 1; visibility: visible; }
+    .video-lightbox-content { position: relative; width: 100%; max-width: 100vw; max-height: 100vh; display: flex; flex-direction: column; align-items: center; gap: 12px; transform: scale(0.1); opacity: 0; transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s ease; }
+    .video-lightbox.show .video-lightbox-content { transform: scale(1); opacity: 1; }
+    .video-lightbox-content video { width: 100%; max-width: 100vw; max-height: 85vh; border-radius: 12px; border: 2px solid rgba(134, 239, 172, 0.3); object-fit: contain; background: #000; display: block; }
+    .video-lightbox-caption { color: #ffffff; font-size: 1rem; font-weight: 700; letter-spacing: 0.5px; text-align: center; padding: 8px 20px; background: rgba(0,0,0,0.6); border-radius: 20px; border: 1px solid rgba(134, 239, 172, 0.3); }
+    .video-lightbox-close { position: absolute; top: -50px; right: 0; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1.5px solid rgba(134, 239, 172, 0.4); color: #ffffff; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.25s ease; z-index: 2; }
+    .video-lightbox-close:hover { background: rgba(134, 239, 172, 0.2); border-color: #86efac; color: #86efac; }
+    @media (max-width: 768px) {
+      .video-lightbox-close { top: 8px; right: 8px; }
+      .video-lightbox { padding: 10px; }
+      .video-lightbox-content video { max-height: 80vh; }
+    }
+
+    .exp-detail-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.9rem; text-decoration: none; padding: 10px 20px; border-radius: 40px; transition: all 0.25s ease; margin-top: 24px; letter-spacing: 0.5px; }
+    .exp-detail-link:hover { gap: 12px; }
+
+    @media (max-width: 900px) {
+      .experience-pro { padding: 36px 24px; }
+    }
+    @media (max-width: 600px) {
+      .experience-pro { padding: 28px 16px; border-radius: 20px; }
+      .exp-detail { padding: 22px 18px; }
+      .exp-detail-header h3 { font-size: 1.2rem; }
+      .photo-gallery { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox { position: fixed; inset: 0; z-index: 9998; background: rgba(0,0,0,0.95); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.5s ease, visibility 0.5s ease; padding: 40px; }
+    .lightbox.show { opacity: 1; visibility: visible; }
+    .lightbox-content { position: relative; max-width: 90vw; max-height: 85vh; display: flex; flex-direction: column; align-items: center; gap: 16px; transform: scale(0.05); opacity: 0; transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s ease; }
+    .lightbox.show .lightbox-content { transform: scale(1); opacity: 1; }
+    .lightbox-content img { max-width: 90vw; max-height: 75vh; border-radius: 12px; border: 2px solid rgba(134, 239, 172, 0.3); object-fit: contain; display: block; background: #0a0a0a; }
+    .lightbox-caption { color: #ffffff; font-size: 1rem; font-weight: 700; letter-spacing: 0.5px; text-align: center; padding: 8px 20px; background: rgba(0,0,0,0.6); border-radius: 20px; border: 1px solid rgba(134, 239, 172, 0.3); }
+    .lightbox-close { position: absolute; top: -50px; right: 0; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1.5px solid rgba(134, 239, 172, 0.4); color: #ffffff; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.25s ease; z-index: 2; }
+    .lightbox-close:hover { background: rgba(134, 239, 172, 0.2); border-color: #86efac; color: #86efac; }
+    .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1.5px solid rgba(134, 239, 172, 0.4); color: #ffffff; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.25s ease; z-index: 2; }
+    .lightbox-nav:hover { background: rgba(134, 239, 172, 0.2); border-color: #86efac; color: #86efac; }
+    .lightbox-prev { left: -70px; }
+    .lightbox-next { right: -70px; }
+    @media (max-width: 768px) {
+      .lightbox-prev { left: 8px; }
+      .lightbox-next { right: 8px; }
+      .lightbox-close { top: 8px; right: 8px; }
+      .lightbox { padding: 16px; }
+      .lightbox-content img { max-height: 70vh; }
+    }
+
+    /* ===== SECTION DENGAN LATAR FOTO ===== */
+    .section-with-photo-bg { position: relative; background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed; isolation: isolate; background-image: var(--bg-photo, none); width: 100%; }
+    .section-with-photo-bg::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+
+    /* ===== PROJEK SELESAI ===== */
+    .projects-done-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px; margin-top: 30px; width: 100%; }
+    .project-done-card { position: relative; border-radius: 20px; overflow: hidden; transition: all 0.25s ease; display: flex; flex-direction: column; text-decoration: none; color: inherit; cursor: pointer; backdrop-filter: blur(8px); }
+    .project-done-card:hover { transform: translateY(-6px); }
+    .project-done-image { width: 100%; height: 180px; overflow: hidden; background: linear-gradient(135deg, #0a0a0a, #1a1a1a); display: flex; justify-content: center; align-items: center; position: relative; }
+    .project-done-image img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+    .project-done-card:hover .project-done-image img { transform: scale(1.06); }
+    .project-done-image .img-placeholder { display: flex; flex-direction: column; align-items: center; gap: 6px; color: #8ba9c0; font-size: 0.8rem; text-align: center; padding: 10px; }
+    .project-done-image .img-placeholder i { font-size: 2.5rem; color: #ffffff; opacity: 0.7; }
+    .project-done-content { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 12px; }
+    .project-done-content .project-number { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 3px 12px; border-radius: 40px; letter-spacing: 0.5px; width: fit-content; }
+    .project-done-content h3 { font-size: 1.15rem; font-weight: 700; line-height: 1.4; }
+    .project-done-content .project-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.88rem; transition: gap 0.25s ease; text-decoration: none; margin-top: 4px; }
+    .project-done-card:hover .project-done-content .project-link { gap: 12px; }
+
+    /* ===== KESIMPULAN ===== */
+    .projects-conclusion { margin-top: 50px; border-radius: 30px; padding: 40px 44px; backdrop-filter: blur(10px); width: 100%; }
+    .projects-conclusion h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 14px; }
+    .projects-conclusion h3 i { font-size: 1.6rem; }
+    .projects-conclusion p { font-size: 1.02rem; line-height: 1.8; }
+    .projects-conclusion .conclusion-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .projects-conclusion .conclusion-tags span { font-size: 0.78rem; font-weight: 600; padding: 6px 16px; border-radius: 40px; }
+
+    /* ===== TENTANG ===== */
+    #about {
+      position: relative;
+      isolation: isolate;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-image: var(--about-photo, url('tentang.jpeg'));
+      width: 100%;
+    }
+    #about::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: rgba(0, 0, 0, 0.25); }
+    body.light-theme #about::before { background: rgba(0, 0, 0, 0.35); }
+
+    .about-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; max-width: 1000px; margin: 0 auto; width: 100%; }
+    .about-photo { display: flex; flex-direction: column; align-items: center; gap: 18px; margin-bottom: 28px; }
+    .about-photo-frame { width: 200px; height: 200px; border-radius: 50%; overflow: hidden; border: 4px solid rgba(134, 239, 172, 0.6); display: flex; justify-content: center; align-items: center; transition: transform 0.3s ease; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }
+    .about-photo-frame:hover { transform: scale(1.03); }
+    .about-photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .about-photo-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 0.8rem; font-weight: 600; text-align: center; padding: 10px; line-height: 1.4; color: #ffffff; }
+    .about-photo-placeholder i { font-size: 2.5rem; margin-bottom: 8px; color: #86efac; }
+    .about-photo-caption { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.3px; }
+    .about-text p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 18px; }
+    .about-text a { font-weight: 700; text-decoration: none; padding-bottom: 1px; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 4px; }
+    .about-text a i { font-size: 0.75rem; transition: transform 0.25s ease; }
+    .about-highlight { padding: 20px 24px; border-radius: 0 16px 16px 0; margin-top: 24px; backdrop-filter: blur(8px); }
+    .about-highlight h4 { font-size: 1.1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+    .about-highlight p { margin-bottom: 0; font-size: 0.95rem; }
+
+    .terminal { border-radius: 16px; overflow: hidden; backdrop-filter: blur(10px); }
+    .terminal-header { padding: 12px 18px; display: flex; align-items: center; gap: 8px; }
+    .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .terminal-dot.red { background: #ff5f56; }
+    .terminal-dot.yellow { background: #ffbd2e; }
+    .terminal-dot.green { background: #27c93f; }
+    .terminal-title { margin-left: auto; font-size: 0.75rem; font-weight: 500; }
+    .terminal-body { padding: 24px 20px; font-size: 0.85rem; line-height: 1.9; }
+    .terminal-body .line { display: flex; gap: 10px; flex-wrap: wrap; }
+    .terminal-body .prompt { user-select: none; }
+    .terminal-body .comment { font-style: italic; }
+    .terminal-body .cursor { display: inline-block; width: 8px; height: 16px; animation: blink 1s step-end infinite; vertical-align: middle; }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+    /* ===== SKILL ===== */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 30px; width: 100%; }
+    .skill-card { padding: 30px 24px; border-radius: 20px; transition: all 0.25s ease; position: relative; overflow: hidden; backdrop-filter: blur(8px); }
+    .skill-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--sk-color, #86efac); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
+    .skill-card:hover::before { transform: scaleX(1); }
+    .skill-card:hover { transform: translateY(-6px); }
+    .skill-card i { font-size: 2.5rem; margin-bottom: 16px; display: block; }
+    .skill-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; }
+    .skill-card p { font-size: 0.92rem; line-height: 1.6; }
+    .skill-card .level { margin-top: 16px; height: 6px; border-radius: 6px; overflow: hidden; }
+    .skill-card .level-bar { height: 100%; background: var(--sk-color, #86efac); border-radius: 6px; transition: width 1s ease; width: 0; }
+    .skill-card.visible .level-bar { width: var(--level); }
+
+    /* ===== TIMELINE ===== */
+    .timeline { position: relative; max-width: 850px; margin: 0 auto; padding-left: 50px; width: 100%; }
+    .timeline::before { content: ''; position: absolute; left: 22px; top: 0; bottom: 0; width: 3px; border-radius: 3px; }
+    .timeline-item { position: relative; margin-bottom: 40px; padding: 26px 28px 24px; border-radius: 20px; transition: all 0.25s ease; backdrop-filter: blur(8px); }
+    .timeline-item::before { content: ''; position: absolute; left: -38px; top: 30px; width: 16px; height: 16px; border-radius: 50%; background: var(--tl-color, #86efac); }
+    .timeline-item:hover { transform: translateX(6px); }
+    .timeline-item .date { display: inline-block; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 40px; margin-bottom: 12px; letter-spacing: 0.3px; }
+    .timeline-item h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 4px; }
+    .timeline-item .subtitle { font-size: 0.95rem; font-weight: 600; margin-bottom: 10px; }
+    .timeline-item p { font-size: 0.95rem; line-height: 1.7; }
+    .timeline-item .badge-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .timeline-item .badge-list span { font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: 40px; }
+
+    /* ===== SENIOR PROGRAMMER ===== */
+    .senior-list { display: flex; flex-direction: column; gap: 22px; max-width: 1100px; margin: 0 auto; width: 100%; }
+    .senior-pair { border-radius: 22px; padding: 20px; backdrop-filter: blur(8px); transition: all 0.3s ease; width: 100%; }
+    .senior-pair-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; width: 100%; }
+    .senior-inline { border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px; transition: all 0.25s ease; min-width: 0; }
+    .senior-inline:hover { transform: translateY(-3px); }
+    .senior-inline-top { display: flex; align-items: center; gap: 12px; }
+    .senior-photo-frame { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; display: flex; justify-content: center; align-items: center; flex-shrink: 0; transition: transform 0.3s ease; }
+    .senior-photo-frame:hover { transform: scale(1.06); }
+    .senior-photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .senior-photo-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2px; font-size: 0.55rem; font-weight: 600; text-align: center; line-height: 1.1; }
+    .senior-photo-placeholder i { font-size: 1.4rem; }
+    .senior-inline-head { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .senior-inline-head h3 { font-size: 0.98rem; font-weight: 700; letter-spacing: 0.1px; }
+    .senior-inline-head .senior-role { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; }
+    .senior-inline > p { font-size: 0.82rem; line-height: 1.55; margin: 0; }
+    .senior-inline .senior-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .senior-inline .senior-tags span { font-size: 0.62rem; font-weight: 600; padding: 3px 9px; border-radius: 40px; }
+    .senior-video-wrap { width: 100%; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; position: relative; background: #000; }
+    .senior-video-wrap iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+    @media (max-width: 700px) {
+      .senior-pair-inner { grid-template-columns: 1fr; gap: 14px; }
+      .senior-pair { padding: 16px; }
+      .senior-inline { padding: 14px; }
+      .senior-photo-frame { width: 56px; height: 56px; }
+      .senior-inline-head h3 { font-size: 0.92rem; }
+    }
+
+    /* ===== PROJEK ===== */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 30px; width: 100%; }
+    .project-card { border-radius: 24px; overflow: hidden; transition: all 0.25s ease; display: flex; flex-direction: column; backdrop-filter: blur(8px); }
+    .project-card:hover { transform: translateY(-6px); }
+    .project-icon { padding: 26px; display: flex; justify-content: center; align-items: center; font-size: 2.8rem; }
+    .project-content { padding: 24px 24px 28px; flex: 1; display: flex; flex-direction: column; }
+    .project-content h3 { font-size: 1.35rem; font-weight: 700; margin-bottom: 10px; }
+    .project-content p { font-size: 0.95rem; margin-bottom: 18px; flex: 1; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+    .project-tags span { font-size: 0.75rem; font-weight: 600; padding: 5px 12px; border-radius: 40px; letter-spacing: 0.3px; }
+
+    /* ===== SOSIAL MEDIA ===== */
+    .social-section { border-radius: 50px; padding: 60px 40px; text-align: center; backdrop-filter: blur(8px); width: 100%; }
+    .social-city { position: relative; margin-top: 40px; padding: 40px 20px 30px; border-radius: 28px; width: 100%; }
+    .social-buildings { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 24px; max-width: 950px; margin: 0 auto; width: 100%; }
+    .social-building { position: relative; display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.3s ease; }
+    .social-building:hover { transform: translateY(-6px); }
+    .social-roof { position: relative; width: 0; height: 0; border-left: 44px solid transparent; border-right: 44px solid transparent; border-bottom: 32px solid var(--sc-color); }
+    .social-roof::before { content: ''; position: absolute; top: -12px; left: -1.5px; width: 3px; height: 12px; background: var(--sc-color); border-radius: 2px; }
+    .social-body { width: 88px; min-height: 100px; border: 2px solid var(--sc-color); border-top: none; border-radius: 0 0 12px 12px; padding: 12px 8px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .social-icon { width: 42px; height: 42px; border-radius: 50%; background: rgba(0,0,0,0.5); border: 2px solid var(--sc-color); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: var(--sc-icon-color, #ffffff); margin-bottom: 4px; }
+    .social-name { font-size: 0.82rem; font-weight: 700; text-align: center; }
+    .social-handle { font-size: 0.65rem; font-weight: 600; text-align: center; word-break: break-all; line-height: 1.2; }
+    .social-visit { margin-top: 6px; font-size: 0.68rem; color: var(--sc-color); font-weight: 700; display: flex; align-items: center; gap: 4px; transition: gap 0.3s ease; }
+    .social-building:hover .social-visit { gap: 8px; }
+
+    /* ===== SOSIAL MEDIA — MOBILE: SATU PARAGRAF KOTAK KE KANAN ===== */
+    @media (max-width: 600px) {
+      .social-section { padding: 30px 14px; border-radius: 20px; }
+      .social-city { margin-top: 20px; padding: 18px 0 14px; border-radius: 18px; overflow: hidden; }
+      .social-buildings {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 12px;
+        padding: 4px 10px 12px;
+        margin: 0 auto;
+        max-width: 100%;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: #86efac rgba(255,255,255,0.08);
+      }
+      .social-buildings::-webkit-scrollbar { height: 4px; }
+      .social-buildings::-webkit-scrollbar-track { background: rgba(255,255,255,0.06); border-radius: 4px; }
+      .social-buildings::-webkit-scrollbar-thumb { background: #86efac; border-radius: 4px; }
+      .social-building {
+        flex: 0 0 auto;
+        width: 90px;
+        scroll-snap-align: start;
+        transform: none !important;
+        transition: transform 0.2s ease;
+      }
+      .social-building:hover { transform: none !important; }
+      .social-roof { border-left-width: 34px; border-right-width: 34px; border-bottom-width: 24px; }
+      .social-roof::before { top: -10px; height: 10px; }
+      .social-body { width: 68px; min-height: 84px; padding: 8px 5px; gap: 4px; border-radius: 0 0 10px 10px; }
+      .social-icon { width: 32px; height: 32px; font-size: 1rem; margin-bottom: 2px; }
+      .social-name { font-size: 0.68rem; }
+      .social-handle { font-size: 0.52rem; word-break: break-all; line-height: 1.1; }
+      .social-visit { font-size: 0.55rem; margin-top: 2px; gap: 2px; }
+      .social-visit i { font-size: 0.5rem; }
+    }
+
+    /* ===== FOOTER ===== */
+    footer { text-align: center; padding: 40px 0 30px; font-size: 0.9rem; margin-top: 40px; transition: all 0.4s ease; width: 100%; }
+    footer p { transition: color 0.4s ease; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero p { max-width: 100%; margin-left: auto; margin-right: auto; }
+      .hero-stats { justify-content: center; }
+      .hero h1 { font-size: 2.6rem; }
+      .avatar-photo { width: 220px; height: 220px; }
+      .hero-avatar { max-width: 380px; }
+      .orbit-photo { width: 58px; height: 58px; }
+      .orbit-photo:nth-child(1) { margin-left: -29px; }
+      .about-wrapper { grid-template-columns: 1fr; gap: 40px; }
+      .projects-conclusion { padding: 30px 28px; }
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.1rem; }
+      .hero-stats { gap: 25px; }
+      .stat-item h3 { font-size: 1.5rem; }
+      .nav-menu { padding: 100px 28px 30px; }
+      .ai-float-badge { font-size: 0.75rem; padding: 8px 14px; }
+      .timeline-item { padding: 22px 20px; }
+      .about-photo-frame { width: 160px; height: 160px; }
+      .avatar-photo { width: 170px; height: 170px; }
+      .hero-avatar { max-width: 300px; }
+      .orbit-photo { width: 48px; height: 48px; }
+      .orbit-photo:nth-child(1) { margin-left: -24px; }
+      .projects-done-grid { grid-template-columns: 1fr; }
+      .projects-conclusion { padding: 24px 20px; }
+      .projects-conclusion h3 { font-size: 1.2rem; }
+      .nav-actions { gap: 10px; }
+      .icon-btn { width: 36px; height: 36px; font-size: 0.9rem; }
+    }
+
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <div id="intro-overlay">
+    <div class="intro-line from-left">BERKARYA MENJADI</div>
+    <div class="intro-line from-right">PROGRAMER DAN SIAP</div>
+    <div class="intro-line from-left">MEMBANTU ANDA</div>
+    <div class="intro-line from-right">BERBAGAI BISNIS</div>
+  </div>
+
+  <div class="bg-base"></div>
+  <div class="bg-white-aurora-1"></div>
+  <div class="bg-white-aurora-2"></div>
+  <div class="bg-white-aurora-3"></div>
+  <div class="bg-color-aurora-1"></div>
+  <div class="bg-color-aurora-2"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-rotate"></div>
+  <div class="particles">
+    <div class="particle"></div><div class="particle dark"></div><div class="particle"></div><div class="particle"></div><div class="particle dark"></div><div class="particle"></div><div class="particle dark"></div><div class="particle"></div><div class="particle"></div><div class="particle dark"></div>
+  </div>
+  <div class="bg-vignette"></div>
+
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">Erutd M Thalif<small data-i18n="logoSub">Developer & AI-Assisted Coder</small></div>
+        <div class="nav-actions">
+          <button class="icon-btn" id="themeToggle" aria-label="Ganti tema"><i class="fas fa-sun"></i></button>
+          <button class="hamburger" id="hamburger" aria-label="Buka menu navigasi"><span></span><span></span><span></span></button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <div class="overlay" id="overlay"></div>
+
+  <nav class="nav-menu" id="navMenu">
+    <ul>
+      <li><a href="#home" class="nav-link"><i class="fas fa-home"></i> <span data-i18n="navHome">Beranda</span></a></li>
+      <li><a href="#pengalaman-4tahun" class="nav-link"><i class="fas fa-city"></i> <span data-i18n="navPengalaman4Tahun">Pengalaman 4 Tahun</span></a></li>
+      <li><a href="#projects-done" class="nav-link"><i class="fas fa-check-circle"></i> <span data-i18n="navProjectsDone">Projek Selesai</span></a></li>
+      <li><a href="#projects" class="nav-link"><i class="fas fa-laptop-code"></i> <span data-i18n="navProjects">Projek</span></a></li>
+      <li>
+        <a href="#" class="skill-toggle" id="skillToggle"><span><i class="fas fa-cog"></i> <span data-i18n="navSkill">Skill</span></span><i class="fas fa-chevron-down arrow"></i></a>
+        <ul class="submenu" id="submenu">
+          <li><a href="#skills" class="nav-link"><i class="fas fa-robot"></i> <span data-i18n="navSkillAI">AI</span></a></li>
+          <li><a href="#skills" class="nav-link"><i class="fab fa-html5"></i> <span data-i18n="navSkillHTML">HTML</span></a></li>
+          <li><a href="#skills" class="nav-link"><i class="fab fa-css3-alt"></i> <span data-i18n="navSkillCSS">CSS</span></a></li>
+          <li><a href="#skills" class="nav-link"><i class="fab fa-js"></i> <span data-i18n="navSkillJS">JavaScript</span></a></li>
+        </ul>
+      </li>
+      <li><a href="#experience" class="nav-link"><i class="fas fa-briefcase"></i> <span data-i18n="navExperience">Pengalaman</span></a></li>
+      <li><a href="#senior-programmer" class="nav-link"><i class="fas fa-user-graduate"></i> <span data-i18n="navSenior">Belajar dari Senior</span></a></li>
+      <li><a href="#education" class="nav-link"><i class="fas fa-graduation-cap"></i> <span data-i18n="navEducation">Pendidikan</span></a></li>
+      <li><a href="#about" class="nav-link"><i class="fas fa-user"></i> <span data-i18n="navAbout">Tentang</span></a></li>
+      <li><a href="#social" class="nav-link"><i class="fas fa-share-alt"></i> <span data-i18n="navSocial">Sosial Media</span></a></li>
+    </ul>
+  </nav>
+
+  <div class="float-buttons">
+    <button class="float-btn lang-btn" id="langToggle" aria-label="Ganti bahasa">
+      <i class="fas fa-language"></i>
+      <span class="float-label" id="langLabel">ID</span>
+      <span class="float-tooltip" data-i18n="langTooltip">Ganti Bahasa</span>
+    </button>
+  </div>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-text fade-in">
+          <span class="hero-badge"><span class="pulse-dot"></span> <span data-i18n="heroBadge">Developer • AI-Assisted</span></span>
+          <h1><span data-i18n="heroTitle1">Halo, saya </span><span class="highlight" data-i18n="heroTitle2">Erutd M Thalif</span></h1>
+          <p data-i18n="heroDesc">Saya seorang <strong>developer yang memahami dunia pemrograman coding</strong>, dan memanfaatkan <strong>AI sebagai asisten development</strong> untuk membangun solusi digital yang lebih cepat, cerdas, dan efisien.</p>
+          <div class="hero-cta-wrap">
+            <button class="btn-primary" data-i18n="heroBtn" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">Lihat Karya <i class="fas fa-arrow-right" style="margin-left: 8px; font-size: 0.8rem;"></i></button>
+            <a href="https://wa.me/6282169298599?text=Halo%20Erutd%2C%20saya%20tertarik%20untuk%20bekerja%20sama.%20Bisa%20dibantu%3F"
+               class="wa-round-btn"
+               target="_blank"
+               rel="noopener"
+               aria-label="Hubungi via WhatsApp">
+              <i class="fab fa-whatsapp"></i>
+              <span class="wa-tip" data-i18n="waTooltip">Hubungi Saya via WhatsApp</span>
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item"><h3>4+</h3><p data-i18n="stat1">Tahun Coding</p></div>
+            <div class="stat-item"><h3>10+</h3><p data-i18n="stat2">Proyek Selesai</p></div>
+            <div class="stat-item"><h3>10</h3><p data-i18n="stat3">Klien Puas</p></div>
+          </div>
+        </div>
+
+        <div class="hero-avatar fade-in">
+          <div class="avatar-orbit">
+            <div class="orbit-photo"><img src="Ai.jpg" alt="AI" onerror="this.onerror=null; this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e4a6b,#7c3aed);&quot;><i class=&quot;fas fa-robot&quot; style=&quot;color:#fff;font-size:1.5rem;&quot;></i></div>';"></div>
+            <div class="orbit-photo"><img src="html.jpg" alt="HTML" onerror="this.onerror=null; this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e34f26,#f16529);&quot;><i class=&quot;fab fa-html5&quot; style=&quot;color:#fff;font-size:1.5rem;&quot;></i></div>';"></div>
+            <div class="orbit-photo"><img src="css.jpg" alt="CSS" onerror="this.onerror=null; this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#264de4,#2965f1);&quot;><i class=&quot;fab fa-css3-alt&quot; style=&quot;color:#fff;font-size:1.5rem;&quot;></i></div>';"></div>
+            <div class="orbit-photo"><img src="js.jpg" alt="JavaScript" onerror="this.onerror=null; this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f7df1e,#f0db4f);&quot;><i class=&quot;fab fa-js&quot; style=&quot;color:#000;font-size:1.5rem;&quot;></i></div>';"></div>
+            <div class="orbit-photo"><img src="coding.jpg" alt="Coding" onerror="this.onerror=null; this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a0a0a,#1a1a1a);&quot;><i class=&quot;fas fa-code&quot; style=&quot;color:#86efac;font-size:1.5rem;&quot;></i></div>';"></div>
+          </div>
+          <div class="avatar-main">
+            <div class="avatar-photo">
+              <img src="beranda.jpg" alt="Foto Erutd M Thalif" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="avatar-placeholder" style="display:none;">&lt;/&gt;<small data-i18n="avatarSmall">Letakkan foto utama di sini<br>(beranda.jpg)</small></div>
+            </div>
+          </div>
+          <div class="ai-float-badge top"><i class="fas fa-robot"></i> <span data-i18n="badgeAI">AI Assistant</span></div>
+          <div class="ai-float-badge bottom"><i class="fas fa-code"></i> <span data-i18n="badgeClean">Clean Code</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PENGALAMAN 4 TAHUN (DRAG + SWIPE) ===== -->
+    <section id="pengalaman-4tahun">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 data-i18n="pengalaman4tahunTitle">Pengalaman 4 Tahun</h2>
+          <p data-i18n="pengalaman4tahunDesc">Geser (drag/swipe) untuk menjelajah, klik item untuk melihat detail — klik di luar untuk menutup</p>
+          <div class="divider"></div>
+        </div>
+        <div class="experience-pro fade-in" id="experiencePro">
+
+          <!-- MARQUEE: drag & swipe -->
+          <div class="exp-marquee-wrap" id="expMarqueeWrap">
+            <div class="exp-marquee-track" id="expMarqueeTrack"></div>
+            <div class="exp-marquee-underline"></div>
+            <div class="exp-marquee-hint" id="expMarqueeHint">Drag / Geser ↔</div>
+          </div>
+
+          <!-- PANEL DETAIL -->
+          <div class="exp-detail" id="expDetail">
+            <div class="exp-detail-header">
+              <div class="detail-icon" id="detailIcon"><i class="fas fa-info-circle"></i></div>
+              <div class="detail-text"><h3 id="detailTitle" data-i18n="detailPickCard">Pilih Kartu</h3><div class="detail-sub" id="detailSub" data-i18n="detailYear">Tahun -</div></div>
+            </div>
+            <p class="exp-detail-desc" id="detailDesc" data-i18n="detailPickDesc">Klik salah satu kartu pengalaman untuk melihat detail dan video.</p>
+            <div class="gallery-label" id="galleryLabelText" data-i18n="galleryLabel">Galeri Video & Foto Pengalaman</div>
+            <div class="photo-gallery" id="detailGallery"></div>
+            <a class="exp-detail-link" id="detailLink" href="#" target="_blank" rel="noopener" style="display:none;">Pelajari Lebih Lanjut <i class="fas fa-external-link-alt"></i></a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="projects-done" class="section-with-photo-bg" style="--bg-photo: url('foto-projek-bg.jpg');">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 data-i18n="projectsDoneTitle">Projek Selesai</h2>
+          <div class="divider"></div>
+        </div>
+        <div class="projects-done-grid">
+          <a href="https://contohprodukmoile.vercel.app/" class="project-done-card fade-in" target="_blank" rel="noopener" style="--pc-color:#86efac;">
+            <div class="project-done-image"><img src="seovenir.jpg" alt="Souvenir Simattaoi" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="img-placeholder" style="display:none;"><i class="fas fa-tshirt"></i><span>Souvenir Simattaoi</span></div></div>
+            <div class="project-done-content"><span class="project-number">Projek 01</span><h3 data-i18n="projDone1Title">Souvenir Simattaoi Web Produk</h3><span class="project-link" data-i18n="projectLink">Lihat Projek</span></div>
+          </a>
+          <a href="https://mentawaifast.vercel.app/" class="project-done-card fade-in" target="_blank" rel="noopener" style="--pc-color:#86efac;">
+            <div class="project-done-image"><img src="kapalcepat.jpg" alt="Mentawai Fast" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="img-placeholder" style="display:none;"><i class="fas fa-ticket-alt"></i><span>Tiket Mentawai Fast</span></div></div>
+            <div class="project-done-content"><span class="project-number">Projek 02</span><h3 data-i18n="projDone2Title">Pesan Tiket Mentawai Fast Online</h3><span class="project-link" data-i18n="projectLink">Lihat Projek</span></div>
+          </a>
+          <a href="https://wenundanganpernikahan.vercel.app/" class="project-done-card fade-in" target="_blank" rel="noopener" style="--pc-color:#86efac;">
+            <div class="project-done-image"><img src="pembelai.jpg" alt="Surat Undangan" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="img-placeholder" style="display:none;"><i class="fas fa-envelope-open-text"></i><span>Surat Undangan Web</span></div></div>
+            <div class="project-done-content"><span class="project-number">Projek 03</span><h3 data-i18n="projDone3Title">Web Surat Undangan Digital</h3><span class="project-link" data-i18n="projectLink">Lihat Projek</span></div>
+          </a>
+          <a href="https://cvlamaranklien.vercel.app/" class="project-done-card fade-in" target="_blank" rel="noopener" style="--pc-color:#86efac;">
+            <div class="project-done-image"><img src="cv.jpg" alt="CV Lamaran" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="img-placeholder" style="display:none;"><i class="fas fa-file-alt"></i><span>CV Lamaran Kerja</span></div></div>
+            <div class="project-done-content"><span class="project-number">Projek 04</span><h3 data-i18n="projDone4Title">Pembuat CV Lamaran Pekerjaan</h3><span class="project-link" data-i18n="projectLink">Lihat Projek</span></div>
+          </a>
+          <a href="https://tokoh-kasir-beras.vercel.app/" class="project-done-card fade-in" target="_blank" rel="noopener" style="--pc-color:#86efac;">
+            <div class="project-done-image"><img src="kasir.jpg" alt="Aplikasi Kasir" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="img-placeholder" style="display:none;"><i class="fas fa-cash-register"></i><span>Aplikasi Kasir</span></div></div>
+            <div class="project-done-content"><span class="project-number">Projek 05</span><h3 data-i18n="projDone5Title">Aplikasi Kasir Tokoh Berbasis Web</h3><span class="project-link" data-i18n="projectLink">Lihat Projek</span></div>
+          </a>
+          <a href="https://rentalmotor1.vercel.app/" class="project-done-card fade-in" target="_blank" rel="noopener" style="--pc-color:#86efac;">
+            <div class="project-done-image"><img src="rental.jpg" alt="Rental Motor" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="img-placeholder" style="display:none;"><i class="fas fa-motorcycle"></i><span>Rental Motor</span></div></div>
+            <div class="project-done-content"><span class="project-number">Projek 06</span><h3 data-i18n="projDone6Title">Booking Rental Motor Berbasis Web</h3><span class="project-link" data-i18n="projectLink">Lihat Projek</span></div>
+          </a>
+          <a href="https://sololeveling-1234.vercel.app/" class="project-done-card fade-in" target="_blank" rel="noopener" style="--pc-color:#86efac;">
+            <div class="project-done-image"><img src="videopendek.jpg" alt="Aplikasi Video Pendek" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="img-placeholder" style="display:none;"><i class="fas fa-video"></i><span>Aplikasi Video Pendek</span></div></div>
+            <div class="project-done-content"><span class="project-number">Projek 07</span><h3 data-i18n="projDone7Title">Aplikasi Video Pendek Berbasis Web</h3><span class="project-link" data-i18n="projectLink">Lihat Projek</span></div>
+          </a>
+          <a href="https://brosur-clien.vercel.app/" class="project-done-card fade-in" target="_blank" rel="noopener" style="--pc-color:#86efac;">
+            <div class="project-done-image"><img src="brosur1111.jpg" alt="Brosur" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="img-placeholder" style="display:none;"><i class="fas fa-image"></i><span>Brosur Digital</span></div></div>
+            <div class="project-done-content"><span class="project-number">Projek 08</span><h3 data-i18n="projDone8Title">Pembuat Brosur Digital</h3><span class="project-link" data-i18n="projectLink">Lihat Projek</span></div>
+          </a>
+          <a href="https://tokohkonter.vercel.app/" class="project-done-card fade-in" target="_blank" rel="noopener" style="--pc-color:#86efac;">
+            <div class="project-done-image"><img src="konter.jpg" alt="Top Up Konter" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="img-placeholder" style="display:none;"><i class="fas fa-mobile-alt"></i><span>Top Up Konter</span></div></div>
+            <div class="project-done-content"><span class="project-number">Projek 09</span><h3 data-i18n="projDone9Title">Top Up Tokoh Konter Berbasis Web</h3><span class="project-link" data-i18n="projectLink">Lihat Projek</span></div>
+          </a>
+          <a href="https://sikulen-coffee.vercel.app/" class="project-done-card fade-in" target="_blank" rel="noopener" style="--pc-color:#86efac;">
+            <div class="project-done-image"><img src="sikulen.jpg" alt="Coffee Sirilogui Mentawai" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="img-placeholder" style="display:none;"><i class="fas fa-mug-hot"></i><span>Coffee Sirilogui Mentawai</span></div></div>
+            <div class="project-done-content"><span class="project-number">Projek 10</span><h3 data-i18n="projDone10Title">Coffee Sirilogui Mentawai Berbasis Web</h3><span class="project-link" data-i18n="projectLink">Lihat Projek</span></div>
+          </a>
+        </div>
+
+        <div class="projects-conclusion fade-in">
+          <h3><i class="fas fa-check-double"></i> <span data-i18n="conclusionTitle">Kesimpulan Semua Projek</span></h3>
+          <p data-i18n="conclusionText">Dari <strong>10 proyek yang telah diselesaikan</strong>, dapat disimpulkan bahwa pengembangan web telah mencakup berbagai aspek kebutuhan digital — mulai dari <strong>katalog produk, pemesanan tiket, pembuatan surat undangan, CV lamaran, aplikasi kasir, booking rental, aplikasi video pendek, brosur digital, top up konter, hingga coffee shop berbasis web</strong>. Setiap proyek dibangun dengan pendekatan yang mengutamakan <strong>fungsionalitas, kemudahan pengguna, dan tampilan modern</strong>. Pemanfaatan <strong>AI sebagai asisten development</strong> terbukti mempercepat proses coding, meningkatkan kualitas kode, dan membuka peluang inovasi yang lebih luas. Ke depan, proyek-proyek ini akan terus dikembangkan agar semakin bermanfaat bagi masyarakat luas, khususnya di daerah Kepulauan Mentawai dan sekitarnya.</p>
+          <div class="conclusion-tags"><span>Web Development</span><span>AI Integration</span><span>Digital Solutions</span><span>Responsive Design</span><span>User Experience</span><span>Modern Tech</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-header fade-in"><h2 data-i18n="projectsTitle">Proyek Terpilih</h2><div class="divider"></div></div>
+        <div class="projects-grid">
+          <div class="project-card fade-in" style="--pj-color:#86efac;"><div class="project-icon"><i class="fas fa-chart-line"></i></div><div class="project-content"><h3 data-i18n="proj1Title">Dashboard Analitik AI</h3><p data-i18n="proj1Desc">Platform visualisasi data dengan prediksi AI. Dibangun menggunakan React & TensorFlow.js, dipercepat dengan AI-assisted coding.</p><div class="project-tags"><span>React</span><span class="ai-tag">TensorFlow.js</span><span>Tailwind</span></div></div></div>
+          <div class="project-card fade-in" style="--pj-color:#86efac;"><div class="project-icon"><i class="fas fa-cart-shopping"></i></div><div class="project-content"><h3 data-i18n="proj2Title">E-Commerce Modern</h3><p data-i18n="proj2Desc">Toko online dengan rekomendasi produk berbasis AI dan pembayaran terintegrasi. Fokus pada performa & UX.</p><div class="project-tags"><span>Node.js</span><span>MongoDB</span><span class="ai-tag">AI Recs</span></div></div></div>
+          <div class="project-card fade-in" style="--pj-color:#86efac;"><div class="project-icon"><i class="fas fa-code-branch"></i></div><div class="project-content"><h3 data-i18n="proj3Title">AI Code Assistant Tool</h3><p data-i18n="proj3Desc">Alat bantu developer untuk review kode otomatis, deteksi bug, dan saran optimasi menggunakan AI.</p><div class="project-tags"><span>JavaScript</span><span class="ai-tag">OpenAI API</span><span>Node.js</span></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-header fade-in"><h2 data-i18n="skillsTitle">Keahlian Utama</h2><p data-i18n="skillsDesc">Kombinasi skill coding dan pemanfaatan AI untuk development yang lebih efektif.</p><div class="divider"></div></div>
+        <div class="skills-grid">
+          <div class="skill-card fade-in" style="--level: 90%; --sk-color:#86efac;"><i class="fas fa-robot"></i><h3 data-i18n="skill1Title">AI untuk Development</h3><p data-i18n="skill1Desc">Memanfaatkan AI (ChatGPT, Copilot, Claude) untuk code generation, debugging, refactoring, dan problem solving.</p><div class="level"><div class="level-bar" style="width: 90%;"></div></div></div>
+          <div class="skill-card fade-in" style="--level: 95%; --sk-color:#86efac;"><i class="fab fa-html5"></i><h3>HTML</h3><p data-i18n="skill2Desc">Markup semantik, struktur aksesibel, dan fondasi web modern yang kokoh untuk semua perangkat.</p><div class="level"><div class="level-bar" style="width: 95%;"></div></div></div>
+          <div class="skill-card fade-in" style="--level: 90%; --sk-color:#86efac;"><i class="fab fa-css3-alt"></i><h3>CSS</h3><p data-i18n="skill3Desc">Desain responsif, Flexbox, Grid, animasi, dan styling modern dengan pendekatan maintainable.</p><div class="level"><div class="level-bar" style="width: 90%;"></div></div></div>
+          <div class="skill-card fade-in" style="--level: 88%; --sk-color:#86efac;"><i class="fab fa-js"></i><h3>JavaScript</h3><p data-i18n="skill4Desc">ES6+, DOM manipulation, async programming, dan logika coding untuk aplikasi interaktif.</p><div class="level"><div class="level-bar" style="width: 88%;"></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <div class="section-header fade-in"><h2 data-i18n="expTitle">Pengalaman</h2><div class="divider"></div></div>
+        <div class="timeline">
+          <div class="timeline-item fade-in" style="--tl-color:#86efac;"><span class="date" data-i18n="exp1Date">2023 — Sekarang</span><h3 data-i18n="exp1Title">Senior AI-Assisted Developer</h3><div class="subtitle" data-i18n="exp1Sub">Freelance / Remote</div><p data-i18n="exp1Desc">Memimpin pengembangan berbagai proyek web dan AI, mengintegrasikan tools AI untuk mempercepat delivery dan meningkatkan kualitas kode. Berkolaborasi dengan klien dari berbagai industri.</p><div class="badge-list"><span>AI Integration</span><span>React</span><span>Node.js</span><span>OpenAI API</span></div></div>
+          <div class="timeline-item fade-in" style="--tl-color:#86efac;"><span class="date" data-i18n="exp2Date">2021 — 2023</span><h3 data-i18n="exp2Title">Frontend Developer</h3><div class="subtitle" data-i18n="exp2Sub">Tech Startup — Jakarta</div><p data-i18n="exp2Desc">Membangun antarmuka pengguna yang responsif dan performan menggunakan HTML, CSS, JavaScript, dan React. Mulai mengadopsi AI-assisted coding untuk refactoring dan testing.</p><div class="badge-list"><span>JavaScript</span><span>CSS Grid</span><span>REST API</span><span>Git</span></div></div>
+          <div class="timeline-item fade-in" style="--tl-color:#86efac;"><span class="date" data-i18n="exp3Date">2019 — 2021</span><h3 data-i18n="exp3Title">Web Developer Junior</h3><div class="subtitle" data-i18n="exp3Sub">Digital Agency — Bandung</div><p data-i18n="exp3Desc">Mengembangkan website company profile, landing page, dan e-commerce sederhana. Belajar fundamental coding, debugging, dan kolaborasi tim.</p><div class="badge-list"><span>HTML5</span><span>CSS3</span><span>jQuery</span><span>Bootstrap</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="senior-programmer">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 data-i18n="seniorTitle">Belajar dari Senior Programmer</h2>
+          <p data-i18n="seniorDesc">Belajar dari konten-konten programmer senior di YouTube — sumber ilmu yang membentuk perjalanan coding saya.</p>
+          <div class="divider"></div>
+        </div>
+        <div class="senior-list">
+
+          <div class="senior-pair fade-in">
+            <div class="senior-pair-inner">
+              <div class="senior-inline">
+                <div class="senior-inline-top">
+                  <div class="senior-photo-frame">
+                    <img src="Dea.png" alt="Programmer 1" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="senior-photo-placeholder" style="display:none;"><i class="fas fa-user-circle"></i><span>programmer1.jpg</span></div>
+                  </div>
+                  <div class="senior-inline-head">
+                    <h3 data-i18n="senior1Name">Dea Afrijal</h3>
+                    <div class="senior-role" data-i18n="senior1Role">Web Development &amp; JavaScript</div>
+                  </div>
+                </div>
+                <p data-i18n="senior1Desc">Konten beliau banyak membahas fundamental JavaScript, best practice coding, dan cara berpikir seorang programmer profesional. Dari sini saya belajar menulis kode yang bersih dan terstruktur.</p>
+                <div class="senior-tags"><span>JavaScript</span><span>Clean Code</span><span>Web Dev</span></div>
+                <div class="senior-video-wrap">
+                  <iframe src="https://youtube.com/embed/mD6uSGSjgr4?si" title="Video Programmer 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                </div>
+              </div>
+              <div class="senior-inline">
+                <div class="senior-inline-top">
+                  <div class="senior-photo-frame">
+                    <img src="Dea.png" alt="Programmer 2" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="senior-photo-placeholder" style="display:none;"><i class="fas fa-user-circle"></i><span>programmer2.jpg</span></div>
+                  </div>
+                  <div class="senior-inline-head">
+                    <h3 data-i18n="senior2Name">Programmer Senior 2</h3>
+                    <div class="senior-role" data-i18n="senior2Role">Python &amp; AI</div>
+                  </div>
+                </div>
+                <p data-i18n="senior2Desc">Dari konten beliau saya belajar Python, gesture recognition, dan dasar-dasar AI. Penjelasannya sangat praktis dan mudah diikuti untuk pemula yang ingin mendalami AI.</p>
+                <div class="senior-tags"><span>Python</span><span>AI</span><span>Gesture</span></div>
+                <div class="senior-video-wrap">
+                  <iframe src="https://youtube.com/embed/poZtdyC24P4?si" title="Video Programmer 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="senior-pair fade-in">
+            <div class="senior-pair-inner">
+              <div class="senior-inline">
+                <div class="senior-inline-top">
+                  <div class="senior-photo-frame">
+                    <img src="Dea.png" alt="Programmer 3" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="senior-photo-placeholder" style="display:none;"><i class="fas fa-user-circle"></i><span>programmer3.jpg</span></div>
+                  </div>
+                  <div class="senior-inline-head">
+                    <h3 data-i18n="senior3Name">Programmer Senior 3</h3>
+                    <div class="senior-role" data-i18n="senior3Role">HTML, CSS &amp; UI/UX</div>
+                  </div>
+                </div>
+                <p data-i18n="senior3Desc">Konten beliau mengajarkan cara mendesain antarmuka web modern dengan HTML dan CSS, termasuk Flexbox, Grid, dan animasi. Ini yang membuat tampilan web saya jadi lebih profesional.</p>
+                <div class="senior-tags"><span>HTML</span><span>CSS</span><span>UI/UX</span></div>
+                <div class="senior-video-wrap">
+                  <iframe src="https://youtube.com/embed/71a2zeC71gk?s" title="Video Programmer 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                </div>
+              </div>
+              <div class="senior-inline">
+                <div class="senior-inline-top">
+                  <div class="senior-photo-frame">
+                    <img src="perogm.png" alt="Programmer 4" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="senior-photo-placeholder" style="display:none;"><i class="fas fa-user-circle"></i><span>programmer4.jpg</span></div>
+                  </div>
+                  <div class="senior-inline-head">
+                    <h3 data-i18n="senior4Name">Programmer Senior 4</h3>
+                    <div class="senior-role" data-i18n="senior4Role">Mobile &amp; NetBeans</div>
+                  </div>
+                </div>
+                <p data-i18n="senior4Desc">Dari konten beliau saya belajar membangun aplikasi desktop dan mobile menggunakan NetBeans, termasuk cara membuat aplikasi kasir sederhana yang menjadi proyek pertama saya.</p>
+                <div class="senior-tags"><span>NetBeans</span><span>Java</span><span>Desktop App</span></div>
+                <div class="senior-video-wrap">
+                  <iframe src="https://youtube.com/embed/fmZX-5r0t5E?si" title="Video Programmer 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="container">
+        <div class="section-header fade-in"><h2 data-i18n="eduTitle">Pendidikan</h2><p data-i18n="eduDesc">Latar belakang akademik dan pembelajaran berkelanjutan.</p><div class="divider"></div></div>
+        <div class="timeline">
+          <div class="timeline-item fade-in" style="--tl-color:#86efac;"><span class="date" data-i18n="edu1Date">Sekarang</span><h3 data-i18n="edu1Title">S1 Teknik Informatika</h3><div class="subtitle"><a href="https://www.upiyptk.ac.id/" target="_blank" rel="noopener" style="color:inherit; text-decoration:none; border-bottom:2px solid rgba(134,239,172,0.5); font-weight:700;"><span data-i18n="edu1Sub">UPI YPTK Padang</span> <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div><p data-i18n="edu1Desc">Sedang menempuh pendidikan sarjana di jurusan Teknik Informatika, Universitas Putra Indonesia YPTK Padang. Fokus pada rekayasa perangkat lunak, algoritma, dan pengembangan aplikasi berbasis AI.</p><div class="badge-list"><span>Algoritma</span><span>Struktur Data</span><span>Basis Data</span><span>AI</span></div></div>
+          <div class="timeline-item fade-in" style="--tl-color:#86efac;"><span class="date" data-i18n="edu2Date">2019 — 2023</span><h3 data-i18n="edu2Title">SMK Rekayasa Perangkat Lunak</h3><div class="subtitle" data-i18n="edu2Sub">SMK Negeri — Jurusan RPL</div><p data-i18n="edu2Desc">Mempelajari dasar pemrograman web dan mobile, serta membangun proyek akhir berupa aplikasi web sederhana.</p><div class="badge-list"><span>Pemrograman Web</span><span>Mobile Dev</span><span>UI/UX Dasar</span></div></div>
+          <div class="timeline-item fade-in" style="--tl-color:#86efac;"><span class="date" data-i18n="edu3Date">Sepanjang Karier</span><h3 data-i18n="edu3Title">Pembelajaran Berkelanjutan</h3><div class="subtitle" data-i18n="edu3Sub">Kursus & Sertifikasi Online</div><p data-i18n="edu3Desc">Secara aktif mengikuti kursus AI, machine learning, dan web development dari platform seperti Coursera, Dicoding, dan freeCodeCamp.</p><div class="badge-list"><span>Machine Learning</span><span>AI for Everyone</span><span>Fullstack JS</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" style="--about-photo: url('tentangmtw.jpg');">
+      <div class="container">
+        <div class="section-header fade-in"><h2 data-i18n="aboutTitle">Tentang Saya</h2><div class="divider"></div></div>
+        <div class="about-wrapper">
+          <div class="about-text fade-in">
+            <div class="about-photo">
+              <div class="about-photo-frame">
+                <img src="beranda.jpg" alt="Foto Erutd M Thalif" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="about-photo-placeholder" style="display: none;"><i class="fas fa-user-circle"></i><span data-i18n="aboutPhotoPh">Letakkan foto Anda di sini<br>(beranda.jpg)</span></div>
+              </div>
+              <span class="about-photo-caption">Erutd M Thalif</span>
+            </div>
+            <p data-i18n="aboutP1">Saya adalah seorang <strong>developer yang mendalami dunia pemrograman coding</strong> — mulai dari membangun struktur HTML, mendesain antarmuka dengan CSS, hingga menghidupkan interaksi menggunakan JavaScript.</p>
+            <p data-i18n="aboutP2">Saya berasal dari <strong>anak desa</strong> <a href="https://id.wikipedia.org/wiki/Kabupaten_Kepulauan_Mentawai" target="_blank" rel="noopener">Kepulauan Mentawai <i class="fas fa-external-link-alt"></i></a>, dan saat ini saya merupakan <strong>mahasiswa yang masih kuliah dengan jurusan Teknik Informatika di kampus</strong> <a href="https://www.upiyptk.ac.id/" target="_blank" rel="noopener">UPI YPTK Padang <i class="fas fa-external-link-alt"></i></a>. Latar belakang ini membentuk saya menjadi pribadi yang gigih, adaptif, dan terus bersemangat belajar hal baru.</p>
+            <p data-i18n="aboutP3">Pengalaman belajar coding saya tumbuh dari <strong>belajar sendiri secara otodidak</strong> — mencari ilmu dari berbagai sumber, mencoba, gagal, lalu bangkit lagi. Saya banyak belajar dari <strong>AI sebagai tutor pribadi</strong>, dari <strong>sosial media</strong>, menonton <strong>konten programmer di YouTube</strong>, mengamati <strong>konter</strong> dan usaha kecil di sekitar, hingga akhirnya memahami dasar-dasar web development secara menyeluruh — dari yang paling dasar sampai mampu membangun proyek web yang profesional.</p>
+            <p data-i18n="aboutP4">Dalam proses development, saya <strong>memanfaatkan AI sebagai asisten cerdas</strong> untuk mempercepat penulisan kode, debugging, refactoring, serta eksplorasi solusi terbaik. AI bukan pengganti skill coding, melainkan <strong>akselerator</strong> yang membuat saya bekerja lebih produktif dan presisi.</p>
+            <div class="about-highlight"><h4><i class="fas fa-lightbulb"></i> <span data-i18n="aboutHighlightTitle">Filosofi Kerja</span></h4><p data-i18n="aboutHighlightText">Kode yang baik lahir dari pemahaman mendalam, dan dipercepat dengan tools yang tepat. AI membantu saya fokus pada arsitektur & logika, bukan hal repetitif.</p></div>
+          </div>
+          <div class="terminal fade-in">
+            <div class="terminal-header"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span><span class="terminal-title">erutd@dev ~ bash</span></div>
+            <div class="terminal-body">
+              <div class="line"><span class="prompt">$</span><span class="cmd">npm run dev</span></div>
+              <div class="line"><span class="comment" data-i18n="termComment1">// Memulai development server...</span></div>
+              <div class="line"><span class="prompt">$</span><span class="cmd">ask-ai "optimize this function"</span></div>
+              <div class="line"><span class="ai-output" data-i18n="termAI">✦ AI: Suggestion applied — 40% faster</span></div>
+              <div class="line"><span class="prompt">$</span><span class="cmd">git commit -m "feat: AI-assisted refactor"</span></div>
+              <div class="line"><span class="comment" data-i18n="termComment2">// ✓ Build success in 1.2s</span></div>
+              <div class="line"><span class="prompt">$</span><span class="cursor"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="social">
+      <div class="container">
+        <div class="social-section fade-in">
+          <div class="section-header" style="margin-bottom: 20px;"><h2 data-i18n="socialTitle">Sosial Media</h2><p data-i18n="socialDesc">Kota kecil media sosial — klik setiap menara untuk terhubung dengan saya.</p><div class="divider"></div></div>
+          <div class="social-city">
+            <div class="social-buildings">
+              <a href="https://www.instagram.com/heru__dev?mdxt=MXBnbGN6NmU4Z3dqaw==" class="social-building" target="_blank" rel="noopener" style="--sc-color:#E1306C;"><div class="social-roof"></div><div class="social-body"><div class="social-icon"><i class="fab fa-instagram"></i></div><div class="social-name">Instagram</div><div class="social-handle">@erutd.thalif</div><div class="social-visit"><span data-i18n="socialVisit">Kunjungi</span> <i class="fas fa-arrow-right"></i></div></div></a>
+              <a href="mailto:erutd.thalif@gmail.com" class="social-building" target="_blank" rel="noopener" style="--sc-color:#EA4335;"><div class="social-roof"></div><div class="social-body"><div class="social-icon"><i class="fas fa-envelope"></i></div><div class="social-name">Email</div><div class="social-handle">erutd.thalif@gmail.com</div><div class="social-visit"><span data-i18n="socialSend">Kirim</span> <i class="fas fa-arrow-right"></i></div></div></a>
+              <a href="https://github.com/erutd378" class="social-building" target="_blank" rel="noopener" style="--sc-color:#86efac; --sc-icon-color:#1a1a1a;"><div class="social-roof"></div><div class="social-body"><div class="social-icon" style="background:rgba(134,239,172,0.9);"><i class="fab fa-github"></i></div><div class="social-name">GitHub</div><div class="social-handle">erutd-m-thalif</div><div class="social-visit"><span data-i18n="socialVisit">Kunjungi</span> <i class="fas fa-arrow-right"></i></div></div></a>
+              <a href="https://vercel.com/erutds-projects" class="social-building" target="_blank" rel="noopener" style="--sc-color:#86efac; --sc-icon-color:#000000;"><div class="social-roof"></div><div class="social-body"><div class="social-icon" style="background:rgba(134,239,172,0.9);"><i class="fas fa-caret-up"></i></div><div class="social-name">Vercel</div><div class="social-handle">erutd.vercel.app</div><div class="social-visit"><span data-i18n="socialVisit">Kunjungi</span> <i class="fas fa-arrow-right"></i></div></div></a>
+              <a href="https://www.tiktok.com/@eru_talif?_r=1&_t=ZS-9ARcWjKcOTm" class="social-building" target="_blank" rel="noopener" style="--sc-color:#25F4EE;"><div class="social-roof"></div><div class="social-body"><div class="social-icon"><i class="fab fa-tiktok"></i></div><div class="social-name">TikTok</div><div class="social-handle">@erutd.thalif</div><div class="social-visit"><span data-i18n="socialWatch">Tonton</span> <i class="fas fa-arrow-right"></i></div></div></a>
+              <a href="https://www.facebook.com/share/18pqFZX9bG/" class="social-building" target="_blank" rel="noopener" style="--sc-color:#1877F2;"><div class="social-roof"></div><div class="social-body"><div class="social-icon"><i class="fab fa-facebook-f"></i></div><div class="social-name">Facebook</div><div class="social-handle">Erutd M Thalif</div><div class="social-visit"><span data-i18n="socialFollow">Ikuti</span> <i class="fas fa-arrow-right"></i></div></div></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p data-i18n="footerText">© 2026 Erutd M Thalif — Developer & AI-Assisted Coder. Dibangun dengan <i class="fas fa-heart" style="color: #86efac;"></i> dan bantuan AI.</p>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-content" id="lightboxContent">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Tutup"><i class="fas fa-times"></i></button>
+      <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Sebelumnya"><i class="fas fa-chevron-left"></i></button>
+      <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Berikutnya"><i class="fas fa-chevron-right"></i></button>
+      <img id="lightboxImg" src="" alt="">
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
+
+  <!-- ===== VIDEO FULLSCREEN LIGHTBOX ===== -->
+  <div class="video-lightbox" id="videoLightbox">
+    <div class="video-lightbox-content" id="videoLightboxContent">
+      <button class="video-lightbox-close" id="videoLightboxClose" aria-label="Tutup"><i class="fas fa-times"></i></button>
+      <video id="videoLightboxPlayer" controls playsinline></video>
+      <div class="video-lightbox-caption" id="videoLightboxCaption"></div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const introOverlay = document.getElementById('intro-overlay');
+      if (introOverlay) {
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+          introOverlay.classList.add('hide');
+          document.body.style.overflow = '';
+          setTimeout(() => introOverlay.remove(), 900);
+        }, 5000);
+      }
+
+      const hamburger = document.getElementById('hamburger');
+      const navMenu = document.getElementById('navMenu');
+      const overlay = document.getElementById('overlay');
+      const skillToggle = document.getElementById('skillToggle');
+      const submenu = document.getElementById('submenu');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const langToggle = document.getElementById('langToggle');
+      const themeToggle = document.getElementById('themeToggle');
+      const body = document.body;
+
+      const expData = {
+        html: { id:'html', icon:'fab fa-html5', title:'HTML', year:'Tahun 1', shortDesc:'Fondasi struktur web — semantic markup, aksesibel, dan kokoh.', desc:'Memulai perjalanan coding dengan mempelajari dasar-dasar HTML. Memahami struktur dasar halaman web, tag-tag penting, semantic HTML, dan bagaimana membangun fondasi web yang kokoh dan aksesibel untuk semua perangkat.', link:'https://developer.mozilla.org/id/docs/Web/HTML', photos:[] },
+        css: { id:'css', icon:'fab fa-css3-alt', title:'CSS', year:'Tahun 1-2', shortDesc:'Desain modern — Flexbox, Grid, animasi, dan responsif.', desc:'Setelah memahami HTML, melanjutkan ke CSS untuk mempercantik tampilan web. Mempelajari Flexbox, Grid, animasi, desain responsif, dan teknik styling modern untuk menciptakan antarmuka yang menarik dan maintainable.', link:'https://developer.mozilla.org/id/docs/Web/CSS', photos:[] },
+        js: { id:'js', icon:'fab fa-js', title:'JavaScript', year:'Tahun 2', shortDesc:'Interaktivitas web — DOM, async, ES6+, dan logika coding.', desc:'Mempelajari JavaScript untuk menghidupkan interaksi di web. Memahami DOM manipulation, async programming, ES6+, dan logika coding untuk membangun aplikasi web yang interaktif dan dinamis.', link:'https://developer.mozilla.org/id/docs/Web/JavaScript', photos:[] },
+        ai: { id:'ai', icon:'fas fa-robot', title:'AI Integration', year:'Tahun 3-4', shortDesc:'AI sebagai asisten development — coding, debugging, refactor.', desc:'Memanfaatkan AI sebagai asisten development untuk mempercepat coding, debugging, dan refactoring. Mengintegrasikan API AI ke dalam berbagai proyek web untuk menciptakan solusi yang lebih cerdas dan efisien.', link:'https://openai.com/', photos:[] },
+        koleksi: {
+          id:'koleksi',
+          icon:'fas fa-video',
+          title:'Koleksi Video 4 Tahun',
+          year:'4 Tahun',
+          shortDesc:'Dokumentasi video perjalanan 4 tahun — dari belajar sampai membangun proyek nyata.',
+          desc:'Koleksi video dokumentasi perjalanan 4 tahun di dunia IT. Video pertama: membuat aplikasi kasir menggunakan NetBeans. Video kedua: belajar gesture Python. Video ketiga: story belajar HTML, CSS, dan JavaScript. Klik ikon video untuk memutar.',
+          link:'#projects-done',
+          videos:[
+            { src:'kasir.mp4', caption:'Membuat Aplikasi Kasir dengan NetBeans' },
+            { src:'python.mp4', caption:'Belajar Gesture Python' },
+            { src:'html.mp4', caption:'Story Belajar HTML, CSS, JS' }
+          ],
+          photos:[]
+        }
+      };
+      const expOrder = ['html', 'css', 'js', 'ai', 'koleksi'];
+
+      /* ===== RENDER MARQUEE ===== */
+      const expMarqueeTrack = document.getElementById('expMarqueeTrack');
+      function renderMarquee() {
+        expMarqueeTrack.innerHTML = '';
+        for (let loop = 0; loop < 2; loop++) {
+          expOrder.forEach((key, i) => {
+            const data = expData[key];
+            const item = document.createElement('div');
+            item.className = 'exp-marquee-item';
+            item.setAttribute('data-exp', key);
+            item.innerHTML = `
+              <i class="${data.icon} marquee-icon"></i>
+              <div class="exp-marquee-text">
+                <h3>${data.title}</h3>
+                <span>${data.year}</span>
+              </div>
+            `;
+            item.addEventListener('click', (e) => {
+              if (marqueeState.wasDragged) return;
+              e.stopPropagation();
+              document.querySelectorAll('.exp-marquee-item').forEach(el => el.classList.remove('active'));
+              document.querySelectorAll(`.exp-marquee-item[data-exp="${key}"]`).forEach(el => el.classList.add('active'));
+              openExp(key);
+            });
+            expMarqueeTrack.appendChild(item);
+
+            if (!(loop === 1 && i === expOrder.length - 1)) {
+              const sep = document.createElement('span');
+              sep.className = 'exp-marquee-sep';
+              sep.innerHTML = '<i class="fas fa-circle"></i>';
+              expMarqueeTrack.appendChild(sep);
+            }
+          });
+        }
+      }
+      renderMarquee();
+
+      /* ===== DRAG & SWIPE UNTUK MARQUEE ===== */
+      const marqueeWrap = document.getElementById('expMarqueeWrap');
+      const marqueeState = {
+        isDragging: false,
+        startX: 0,
+        scrollStart: 0,
+        wasDragged: false,
+        currentTranslate: 0,
+        autoTranslate: 0,
+        lastTime: 0,
+        rafId: null
+      };
+
+      function getCurrentTranslateX(el) {
+        const style = window.getComputedStyle(el);
+        const transform = style.transform || style.webkitTransform;
+        if (!transform || transform === 'none') return 0;
+        const matrix = transform.match(/matrix.*\((.+)\)/);
+        if (matrix) {
+          const values = matrix[1].split(', ');
+          return parseFloat(values[4]) || 0;
+        }
+        return 0;
+      }
+
+      let dragState = {
+        active: false,
+        startX: 0,
+        startY: 0,
+        currentTranslate: 0,
+        startTranslate: 0,
+        wasDragged: false,
+        direction: null,
+        pointerId: null
+      };
+
+      function onPointerDown(e) {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        dragState.active = true;
+        dragState.startX = e.clientX;
+        dragState.startY = e.clientY;
+        dragState.wasDragged = false;
+        dragState.direction = null;
+        dragState.pointerId = e.pointerId;
+
+        marqueeWrap.classList.add('dragging');
+        const currentX = getCurrentTranslateX(expMarqueeTrack);
+        dragState.startTranslate = currentX;
+        dragState.currentTranslate = currentX;
+
+        expMarqueeTrack.style.animation = 'none';
+        expMarqueeTrack.style.transform = `translateX(${currentX}px)`;
+      }
+
+      function onPointerMove(e) {
+        if (!dragState.active) return;
+        const dx = e.clientX - dragState.startX;
+        const dy = e.clientY - dragState.startY;
+
+        if (!dragState.direction) {
+          if (Math.abs(dx) > 6 || Math.abs(dy) > 6) {
+            dragState.direction = Math.abs(dx) > Math.abs(dy) ? 'horizontal' : 'vertical';
+          } else {
+            return;
+          }
+        }
+
+        if (dragState.direction !== 'horizontal') {
+          return;
+        }
+
+        if (e.cancelable) e.preventDefault();
+
+        dragState.wasDragged = true;
+        dragState.currentTranslate = dragState.startTranslate + dx;
+
+        const trackWidth = expMarqueeTrack.scrollWidth;
+        const halfWidth = trackWidth / 2;
+        let tx = dragState.currentTranslate;
+        while (tx > 0) tx -= halfWidth;
+        while (tx < -halfWidth) tx += halfWidth;
+        dragState.currentTranslate = tx;
+
+        expMarqueeTrack.style.transform = `translateX(${tx}px)`;
+      }
+
+      function onPointerUp(e) {
+        if (!dragState.active) return;
+        dragState.active = false;
+        marqueeWrap.classList.remove('dragging');
+
+        if (dragState.wasDragged) {
+          setTimeout(() => { dragState.wasDragged = false; }, 50);
+        }
+
+        const currentX = dragState.currentTranslate;
+        const trackWidth = expMarqueeTrack.scrollWidth;
+        const halfWidth = trackWidth / 2;
+
+        let tx = currentX;
+        while (tx > 0) tx -= halfWidth;
+        while (tx < -halfWidth) tx += halfWidth;
+
+        expMarqueeTrack.style.transform = `translateX(${tx}px)`;
+        expMarqueeTrack.style.animation = '';
+
+        const progress = Math.min(Math.max(-tx / halfWidth, 0), 1);
+        const duration = 40;
+        const delay = -(progress * duration);
+        expMarqueeTrack.style.animationDelay = `${delay}s`;
+        expMarqueeTrack.style.animationDuration = `${duration}s`;
+      }
+
+      marqueeWrap.addEventListener('pointerdown', onPointerDown);
+      marqueeWrap.addEventListener('pointermove', onPointerMove);
+      marqueeWrap.addEventListener('pointerup', onPointerUp);
+      marqueeWrap.addEventListener('pointercancel', onPointerUp);
+      marqueeWrap.addEventListener('pointerleave', (e) => { if (dragState.active) onPointerUp(e); });
+      marqueeWrap.addEventListener('dragstart', (e) => e.preventDefault());
+
+      /* ===== DETAIL PANEL ===== */
+      const expDetail = document.getElementById('expDetail');
+      const experiencePro = document.getElementById('experiencePro');
+      const detailIcon = document.getElementById('detailIcon');
+      const detailTitle = document.getElementById('detailTitle');
+      const detailSub = document.getElementById('detailSub');
+      const detailDesc = document.getElementById('detailDesc');
+      const detailGallery = document.getElementById('detailGallery');
+      const detailLink = document.getElementById('detailLink');
+      const galleryLabelText = document.getElementById('galleryLabelText');
+      let currentPhotos = [];
+      let currentPhotoIndex = 0;
+
+      // ===== VIDEO LIGHTBOX ELEMENTS =====
+      const videoLightbox = document.getElementById('videoLightbox');
+      const videoLightboxContent = document.getElementById('videoLightboxContent');
+      const videoLightboxPlayer = document.getElementById('videoLightboxPlayer');
+      const videoLightboxCaption = document.getElementById('videoLightboxCaption');
+      const videoLightboxClose = document.getElementById('videoLightboxClose');
+
+      function openVideoLightbox(src, caption) {
+        videoLightboxPlayer.src = src;
+        videoLightboxCaption.textContent = caption;
+        videoLightboxContent.style.transition = 'none';
+        videoLightboxContent.style.transform = 'scale(0.1)';
+        videoLightboxContent.style.opacity = '0';
+        videoLightbox.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            videoLightboxContent.style.transition = 'transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s ease';
+            videoLightboxContent.style.transform = 'scale(1)';
+            videoLightboxContent.style.opacity = '1';
+            videoLightboxPlayer.play().catch(() => {});
+          });
+        });
+      }
+
+      function closeVideoLightbox() {
+        videoLightboxPlayer.pause();
+        videoLightboxContent.style.transition = 'transform 0.5s cubic-bezier(0.55, 0, 1, 0.45), opacity 0.5s ease';
+        videoLightboxContent.style.transform = 'scale(0.1)';
+        videoLightboxContent.style.opacity = '0';
+        setTimeout(() => {
+          videoLightbox.classList.remove('show');
+          videoLightboxPlayer.src = '';
+          document.body.style.overflow = '';
+        }, 500);
+      }
+
+      videoLightboxClose.addEventListener('click', closeVideoLightbox);
+      videoLightbox.addEventListener('click', (e) => { if (e.target === videoLightbox) closeVideoLightbox(); });
+
+      function renderGallery(photos, videos) {
+        detailGallery.innerHTML = '';
+        currentPhotos = photos || [];
+
+        const hasVideos = videos && videos.length > 0;
+        const hasPhotos = photos && photos.length > 0;
+
+        if (hasVideos) {
+          galleryLabelText.textContent = 'Galeri Video Pengalaman';
+        } else {
+          galleryLabelText.textContent = 'Galeri Foto Pengalaman';
+        }
+
+        if (!hasVideos && !hasPhotos) {
+          const emptyMsg = document.createElement('div');
+          emptyMsg.style.gridColumn = '1 / -1';
+          emptyMsg.style.textAlign = 'center';
+          emptyMsg.style.padding = '30px 10px';
+          emptyMsg.style.fontSize = '0.9rem';
+          emptyMsg.style.opacity = '0.7';
+          emptyMsg.innerHTML = '<i class="fas fa-image" style="font-size:2rem;display:block;margin-bottom:10px;opacity:0.5;"></i>Belum ada foto untuk bagian ini.';
+          detailGallery.appendChild(emptyMsg);
+          return;
+        }
+
+        if (hasVideos) {
+          detailGallery.style.gridTemplateColumns = '1fr';
+          videos.forEach((vid, index) => {
+            const box = document.createElement('div');
+            box.className = 'video-box';
+            const num = document.createElement('span');
+            num.className = 'video-number';
+            num.textContent = `Video #${String(index + 1).padStart(2, '0')}`;
+            box.appendChild(num);
+
+            // Tampilan awal: IKON VIDEO (bukan player)
+            const iconWrap = document.createElement('div');
+            iconWrap.className = 'video-icon-wrap';
+            iconWrap.innerHTML = `
+              <div class="video-play-circle"><i class="fas fa-play"></i></div>
+              <div class="video-icon-caption">${vid.caption}</div>
+              <div class="video-icon-file">${vid.src}</div>
+            `;
+            box.appendChild(iconWrap);
+
+            const caption = document.createElement('div');
+            caption.className = 'video-caption';
+            caption.textContent = vid.caption;
+            box.appendChild(caption);
+
+            // Klik → buka fullscreen lightbox & putar otomatis
+            box.addEventListener('click', (e) => {
+              e.stopPropagation();
+              openVideoLightbox(vid.src, vid.caption);
+            });
+
+            detailGallery.appendChild(box);
+          });
+        } else {
+          detailGallery.style.gridTemplateColumns = '';
+        }
+
+        if (hasPhotos) {
+          photos.forEach((photo, index) => {
+            const box = document.createElement('div');
+            box.className = 'photo-box';
+            const num = document.createElement('span');
+            num.className = 'photo-number';
+            num.textContent = `#${String(index + 1).padStart(2, '0')}`;
+            box.appendChild(num);
+            const zoom = document.createElement('div');
+            zoom.className = 'zoom-icon';
+            zoom.innerHTML = '<i class="fas fa-expand"></i>';
+            box.appendChild(zoom);
+            const placeholder = document.createElement('div');
+            placeholder.className = 'photo-flat-icon';
+            placeholder.innerHTML = `<i class="fas fa-image"></i><span>${photo.caption}</span><span class="file-name">${photo.src}</span>`;
+            box.appendChild(placeholder);
+            const img = document.createElement('img');
+            img.className = 'photo-real';
+            img.src = photo.src;
+            img.alt = photo.caption;
+            img.loading = 'lazy';
+            img.onload = function() { placeholder.style.display = 'none'; };
+            img.onerror = function() { this.remove(); };
+            box.appendChild(img);
+            const caption = document.createElement('div');
+            caption.className = 'photo-caption';
+            caption.textContent = photo.caption;
+            box.appendChild(caption);
+            box.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(index); });
+            detailGallery.appendChild(box);
+          });
+        }
+      }
+
+      function openExp(key) {
+        const data = expData[key];
+        if (!data) return;
+        detailIcon.innerHTML = `<i class="${data.icon}"></i>`;
+        detailTitle.textContent = data.title + ' — Detail Pengalaman';
+        detailSub.textContent = data.year;
+        detailDesc.textContent = data.desc;
+        renderGallery(data.photos, data.videos);
+        if (data.link && data.link.startsWith('#')) {
+          detailLink.href = data.link;
+          detailLink.removeAttribute('target');
+          detailLink.innerHTML = 'Lihat Proyek <i class="fas fa-arrow-right"></i>';
+        } else {
+          detailLink.href = data.link;
+          detailLink.setAttribute('target', '_blank');
+          detailLink.innerHTML = 'Pelajari Lebih Lanjut <i class="fas fa-external-link-alt"></i>';
+        }
+        detailLink.style.display = 'inline-flex';
+        expDetail.classList.add('show');
+        setTimeout(() => { expDetail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
+      }
+
+      function closeExp() {
+        if (!expDetail.classList.contains('show')) return;
+        detailGallery.querySelectorAll('video').forEach(v => { try { v.pause(); } catch(e){} });
+        expDetail.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+        expDetail.style.opacity = '0';
+        expDetail.style.transform = 'translateY(15px)';
+        setTimeout(() => {
+          expDetail.classList.remove('show');
+          expDetail.style.opacity = '';
+          expDetail.style.transform = '';
+          expDetail.style.transition = '';
+          document.querySelectorAll('.exp-marquee-item').forEach(c => c.classList.remove('active'));
+        }, 350);
+      }
+
+      document.addEventListener('click', (e) => {
+        if (!expDetail.classList.contains('show')) return;
+        if (expDetail.contains(e.target)) return;
+        if (marqueeWrap.contains(e.target)) return;
+        if (e.target.closest('#lightbox')) return;
+        if (e.target.closest('#videoLightbox')) return;
+        if (e.target.closest('header') || e.target.closest('.nav-menu') || e.target.closest('.hamburger') || e.target.closest('.float-buttons')) return;
+        if (e.target.closest('.nav-menu ul li a')) return;
+        closeExp();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (videoLightbox.classList.contains('show')) return;
+          if (lightbox.classList.contains('show')) return;
+          if (navMenu.classList.contains('active')) { closeMenu(); return; }
+          if (expDetail.classList.contains('show')) closeExp();
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          if (expDetail.classList.contains('show')) {
+            expDetail.classList.remove('show');
+            document.querySelectorAll('.exp-marquee-item').forEach(c => c.classList.remove('active'));
+          }
+          const href = this.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) { closeMenu(); setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 300); }
+          }
+        });
+      });
+
+      /* ===== LIGHTBOX FOTO ===== */
+      const lightbox = document.getElementById('lightbox');
+      const lightboxContent = document.getElementById('lightboxContent');
+      const lightboxImg = document.getElementById('lightboxImg');
+      const lightboxCaption = document.getElementById('lightboxCaption');
+      const lightboxClose = document.getElementById('lightboxClose');
+      const lightboxPrev = document.getElementById('lightboxPrev');
+      const lightboxNext = document.getElementById('lightboxNext');
+
+      function openLightbox(index) {
+        if (!currentPhotos.length) return;
+        currentPhotoIndex = index;
+        const photo = currentPhotos[index];
+        if (!photo) return;
+        lightboxImg.src = photo.src;
+        lightboxImg.alt = photo.caption;
+        lightboxCaption.textContent = photo.caption;
+        lightboxContent.style.transition = 'none';
+        lightboxContent.style.transform = 'scale(0.05)';
+        lightboxContent.style.opacity = '0';
+        lightbox.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            lightboxContent.style.transition = 'transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease';
+            lightboxContent.style.transform = 'scale(1)';
+            lightboxContent.style.opacity = '1';
+          });
+        });
+      }
+
+      function closeLightbox() {
+        lightboxContent.style.transition = 'transform 0.5s cubic-bezier(0.55, 0, 1, 0.45), opacity 0.5s ease';
+        lightboxContent.style.transform = 'scale(0.05)';
+        lightboxContent.style.opacity = '0';
+        setTimeout(() => { lightbox.classList.remove('show'); document.body.style.overflow = ''; }, 500);
+      }
+
+      function showPhoto(index) {
+        if (!currentPhotos.length) return;
+        if (index < 0) index = currentPhotos.length - 1;
+        if (index >= currentPhotos.length) index = 0;
+        currentPhotoIndex = index;
+        const photo = currentPhotos[index];
+        lightboxImg.style.opacity = '0';
+        lightboxImg.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => {
+          lightboxImg.src = photo.src;
+          lightboxImg.alt = photo.caption;
+          lightboxCaption.textContent = photo.caption;
+          lightboxImg.style.opacity = '1';
+        }, 150);
+      }
+
+      lightboxClose.addEventListener('click', closeLightbox);
+      lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); showPhoto(currentPhotoIndex - 1); });
+      lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); showPhoto(currentPhotoIndex + 1); });
+      lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+
+      document.addEventListener('keydown', (e) => {
+        if (lightbox.classList.contains('show')) {
+          if (e.key === 'Escape') closeLightbox();
+          if (e.key === 'ArrowLeft') showPhoto(currentPhotoIndex - 1);
+          if (e.key === 'ArrowRight') showPhoto(currentPhotoIndex + 1);
+        }
+      });
+
+      /* ===== TERJEMAHAN ===== */
+      const translations = {
+        id: {
+          logoSub: 'Developer & AI-Assisted Coder',
+          navHome: 'Beranda',
+          navPengalaman4Tahun: 'Pengalaman 4 Tahun',
+          navProjectsDone: 'Projek Selesai',
+          navProjects: 'Projek',
+          navSkill: 'Skill',
+          navSkillAI: 'AI',
+          navSkillHTML: 'HTML',
+          navSkillCSS: 'CSS',
+          navSkillJS: 'JavaScript',
+          navExperience: 'Pengalaman',
+          navSenior: 'Belajar dari Senior',
+          navEducation: 'Pendidikan',
+          navAbout: 'Tentang',
+          navSocial: 'Sosial Media',
+          heroBadge: 'Developer • AI-Assisted',
+          heroTitle1: 'Halo, saya ',
+          heroTitle2: 'Erutd M Thalif',
+          heroDesc: 'Saya seorang <strong>developer yang memahami dunia pemrograman coding</strong>, dan memanfaatkan <strong>AI sebagai asisten development</strong> untuk membangun solusi digital yang lebih cepat, cerdas, dan efisien.',
+          heroBtn: 'Lihat Karya',
+          stat1: 'Tahun Coding',
+          stat2: 'Proyek Selesai',
+          stat3: 'Klien Puas',
+          avatarSmall: 'Letakkan foto utama di sini<br>(beranda.jpg)',
+          badgeAI: 'AI Assistant',
+          badgeClean: 'Clean Code',
+          pengalaman4tahunTitle: 'Pengalaman 4 Tahun',
+          pengalaman4tahunDesc: 'Geser (drag/swipe) untuk menjelajah, klik item untuk melihat detail — klik di luar untuk menutup',
+          detailPickCard: 'Pilih Kartu',
+          detailYear: 'Tahun -',
+          detailPickDesc: 'Klik salah satu kartu pengalaman untuk melihat detail dan video.',
+          galleryLabel: 'Galeri Video & Foto Pengalaman',
+          expCardDetail: 'Lihat Detail',
+          projectsDoneTitle: 'Projek Selesai',
+          projectLink: 'Lihat Projek',
+          projDone1Title: 'Souvenir Simattaoi Web Produk',
+          projDone2Title: 'Pesan Tiket Mentawai Fast Online',
+          projDone3Title: 'Web Surat Undangan Digital',
+          projDone4Title: 'Pembuat CV Lamaran Pekerjaan',
+          projDone5Title: 'Aplikasi Kasir Tokoh Berbasis Web',
+          projDone6Title: 'Booking Rental Motor Berbasis Web',
+          projDone7Title: 'Aplikasi Video Pendek Berbasis Web',
+          projDone8Title: 'Pembuat Brosur Digital',
+          projDone9Title: 'Top Up Tokoh Konter Berbasis Web',
+          projDone10Title: 'Coffee Sirilogui Mentawai Berbasis Web',
+          conclusionTitle: 'Kesimpulan Semua Projek',
+          conclusionText: 'Dari <strong>10 proyek yang telah diselesaikan</strong>, dapat disimpulkan bahwa pengembangan web telah mencakup berbagai aspek kebutuhan digital — mulai dari <strong>katalog produk, pemesanan tiket, pembuatan surat undangan, CV lamaran, aplikasi kasir, booking rental, aplikasi video pendek, brosur digital, top up konter, hingga coffee shop berbasis web</strong>. Setiap proyek dibangun dengan pendekatan yang mengutamakan <strong>fungsionalitas, kemudahan pengguna, dan tampilan modern</strong>. Pemanfaatan <strong>AI sebagai asisten development</strong> terbukti mempercepat proses coding, meningkatkan kualitas kode, dan membuka peluang inovasi yang lebih luas. Ke depan, proyek-proyek ini akan terus dikembangkan agar semakin bermanfaat bagi masyarakat luas, khususnya di daerah Kepulauan Mentawai dan sekitarnya.',
+          projectsTitle: 'Proyek Terpilih',
+          proj1Title: 'Dashboard Analitik AI',
+          proj1Desc: 'Platform visualisasi data dengan prediksi AI. Dibangun menggunakan React & TensorFlow.js, dipercepat dengan AI-assisted coding.',
+          proj2Title: 'E-Commerce Modern',
+          proj2Desc: 'Toko online dengan rekomendasi produk berbasis AI dan pembayaran terintegrasi. Fokus pada performa & UX.',
+          proj3Title: 'AI Code Assistant Tool',
+          proj3Desc: 'Alat bantu developer untuk review kode otomatis, deteksi bug, dan saran optimasi menggunakan AI.',
+          skillsTitle: 'Keahlian Utama',
+          skillsDesc: 'Kombinasi skill coding dan pemanfaatan AI untuk development yang lebih efektif.',
+          skill1Title: 'AI untuk Development',
+          skill1Desc: 'Memanfaatkan AI (ChatGPT, Copilot, Claude) untuk code generation, debugging, refactoring, dan problem solving.',
+          skill2Desc: 'Markup semantik, struktur aksesibel, dan fondasi web modern yang kokoh untuk semua perangkat.',
+          skill3Desc: 'Desain responsif, Flexbox, Grid, animasi, dan styling modern dengan pendekatan maintainable.',
+          skill4Desc: 'ES6+, DOM manipulation, async programming, dan logika coding untuk aplikasi interaktif.',
+          expTitle: 'Pengalaman',
+          exp1Date: '2023 — Sekarang',
+          exp1Title: 'Senior AI-Assisted Developer',
+          exp1Sub: 'Freelance / Remote',
+          exp1Desc: 'Memimpin pengembangan berbagai proyek web dan AI, mengintegrasikan tools AI untuk mempercepat delivery dan meningkatkan kualitas kode. Berkolaborasi dengan klien dari berbagai industri.',
+          exp2Date: '2021 — 2023',
+          exp2Title: 'Frontend Developer',
+          exp2Sub: 'Tech Startup — Jakarta',
+          exp2Desc: 'Membangun antarmuka pengguna yang responsif dan performan menggunakan HTML, CSS, JavaScript, dan React. Mulai mengadopsi AI-assisted coding untuk refactoring dan testing.',
+          exp3Date: '2019 — 2021',
+          exp3Title: 'Web Developer Junior',
+          exp3Sub: 'Digital Agency — Bandung',
+          exp3Desc: 'Mengembangkan website company profile, landing page, dan e-commerce sederhana. Belajar fundamental coding, debugging, dan kolaborasi tim.',
+          seniorTitle: 'Belajar dari Senior Programmer',
+          seniorDesc: 'Belajar dari konten-konten programmer senior di YouTube — sumber ilmu yang membentuk perjalanan coding saya.',
+          senior1Name: 'Programmer Senior 1',
+          senior1Role: 'Web Development & JavaScript',
+          senior1Desc: 'Konten beliau banyak membahas fundamental JavaScript, best practice coding, dan cara berpikir seorang programmer profesional. Dari sini saya belajar menulis kode yang bersih dan terstruktur.',
+          senior2Name: 'Programmer Senior 2',
+          senior2Role: 'Python & AI',
+          senior2Desc: 'Dari konten beliau saya belajar Python, gesture recognition, dan dasar-dasar AI. Penjelasannya sangat praktis dan mudah diikuti untuk pemula yang ingin mendalami AI.',
+          senior3Name: 'Programmer Senior 3',
+          senior3Role: 'HTML, CSS & UI/UX',
+          senior3Desc: 'Konten beliau mengajarkan cara mendesain antarmuka web modern dengan HTML dan CSS, termasuk Flexbox, Grid, dan animasi. Ini yang membuat tampilan web saya jadi lebih profesional.',
+          senior4Name: 'Programmer Senior 4',
+          senior4Role: 'Mobile & NetBeans',
+          senior4Desc: 'Dari konten beliau saya belajar membangun aplikasi desktop dan mobile menggunakan NetBeans, termasuk cara membuat aplikasi kasir sederhana yang menjadi proyek pertama saya.',
+          eduTitle: 'Pendidikan',
+          eduDesc: 'Latar belakang akademik dan pembelajaran berkelanjutan.',
+          edu1Date: 'Sekarang',
+          edu1Title: 'S1 Teknik Informatika',
+          edu1Sub: 'UPI YPTK Padang',
+          edu1Desc: 'Sedang menempuh pendidikan sarjana di jurusan Teknik Informatika, Universitas Putra Indonesia YPTK Padang. Fokus pada rekayasa perangkat lunak, algoritma, dan pengembangan aplikasi berbasis AI.',
+          edu2Date: '2019 — 2023',
+          edu2Title: 'SMK Rekayasa Perangkat Lunak',
+          edu2Sub: 'SMK Negeri — Jurusan RPL',
+          edu2Desc: 'Mempelajari dasar pemrograman web dan mobile, serta membangun proyek akhir berupa aplikasi web sederhana.',
+          edu3Date: 'Sepanjang Karier',
+          edu3Title: 'Pembelajaran Berkelanjutan',
+          edu3Sub: 'Kursus & Sertifikasi Online',
+          edu3Desc: 'Secara aktif mengikuti kursus AI, machine learning, dan web development dari platform seperti Coursera, Dicoding, dan freeCodeCamp.',
+          aboutTitle: 'Tentang Saya',
+          aboutPhotoPh: 'Letakkan foto Anda di sini<br>(beranda.jpg)',
+          aboutP1: 'Saya adalah seorang <strong>developer yang mendalami dunia pemrograman coding</strong> — mulai dari membangun struktur HTML, mendesain antarmuka dengan CSS, hingga menghidupkan interaksi menggunakan JavaScript.',
+          aboutP2: 'Saya berasal dari <strong>anak desa</strong> <a href="https://id.wikipedia.org/wiki/Kabupaten_Kepulauan_Mentawai" target="_blank" rel="noopener">Kepulauan Mentawai <i class="fas fa-external-link-alt"></i></a>, dan saat ini saya merupakan <strong>mahasiswa yang masih kuliah dengan jurusan Teknik Informatika di kampus</strong> <a href="https://www.upiyptk.ac.id/" target="_blank" rel="noopener">UPI YPTK Padang <i class="fas fa-external-link-alt"></i></a>. Latar belakang ini membentuk saya menjadi pribadi yang gigih, adaptif, dan terus bersemangat belajar hal baru.',
+          aboutP3: 'Pengalaman belajar coding saya tumbuh dari <strong>belajar sendiri secara otodidak</strong> — mencari ilmu dari berbagai sumber, mencoba, gagal, lalu bangkit lagi. Saya banyak belajar dari <strong>AI sebagai tutor pribadi</strong>, dari <strong>sosial media</strong>, menonton <strong>konten programmer di YouTube</strong>, mengamati <strong>konter</strong> dan usaha kecil di sekitar, hingga akhirnya memahami dasar-dasar web development secara menyeluruh — dari yang paling dasar sampai mampu membangun proyek web yang profesional.',
+          aboutP4: 'Dalam proses development, saya <strong>memanfaatkan AI sebagai asisten cerdas</strong> untuk mempercepat penulisan kode, debugging, refactoring, serta eksplorasi solusi terbaik. AI bukan pengganti skill coding, melainkan <strong>akselerator</strong> yang membuat saya bekerja lebih produktif dan presisi.',
+          aboutHighlightTitle: 'Filosofi Kerja',
+          aboutHighlightText: 'Kode yang baik lahir dari pemahaman mendalam, dan dipercepat dengan tools yang tepat. AI membantu saya fokus pada arsitektur & logika, bukan hal repetitif.',
+          termComment1: '// Memulai development server...',
+          termAI: '✦ AI: Suggestion applied — 40% faster',
+          termComment2: '// ✓ Build success in 1.2s',
+          socialTitle: 'Sosial Media',
+          socialDesc: 'Kota kecil media sosial — klik setiap menara untuk terhubung dengan saya.',
+          socialVisit: 'Kunjungi',
+          socialSend: 'Kirim',
+          socialWatch: 'Tonton',
+          socialFollow: 'Ikuti',
+          waTooltip: 'Hubungi Saya via WhatsApp',
+          langTooltip: 'Ganti Bahasa',
+          marqueeHint: 'Drag / Geser ↔',
+          footerText: '© 2026 Erutd M Thalif — Developer & AI-Assisted Coder. Dibangun dengan <i class="fas fa-heart" style="color: #86efac;"></i> dan bantuan AI.'
+        },
+        en: {
+          logoSub: 'Developer & AI-Assisted Coder',
+          navHome: 'Home',
+          navPengalaman4Tahun: '4 Years Experience',
+          navProjectsDone: 'Completed Projects',
+          navProjects: 'Projects',
+          navSkill: 'Skills',
+          navSkillAI: 'AI',
+          navSkillHTML: 'HTML',
+          navSkillCSS: 'CSS',
+          navSkillJS: 'JavaScript',
+          navExperience: 'Experience',
+          navSenior: 'Learn from Seniors',
+          navEducation: 'Education',
+          navAbout: 'About',
+          navSocial: 'Social Media',
+          heroBadge: 'Developer • AI-Assisted',
+          heroTitle1: 'Hello, I am ',
+          heroTitle2: 'Erutd M Thalif',
+          heroDesc: 'I am a <strong>developer who understands the world of programming and coding</strong>, and leverages <strong>AI as a development assistant</strong> to build digital solutions that are faster, smarter, and more efficient.',
+          heroBtn: 'View Work',
+          stat1: 'Years Coding',
+          stat2: 'Projects Done',
+          stat3: 'Happy Clients',
+          avatarSmall: 'Put your main photo here<br>(beranda.jpg)',
+          badgeAI: 'AI Assistant',
+          badgeClean: 'Clean Code',
+          pengalaman4tahunTitle: '4 Years Experience',
+          pengalaman4tahunDesc: 'Drag/swipe to explore, click an item to view details — click outside to close',
+          detailPickCard: 'Pick a Card',
+          detailYear: 'Year -',
+          detailPickDesc: 'Click one of the experience cards to view details and video.',
+          galleryLabel: 'Video & Photo Gallery',
+          expCardDetail: 'View Details',
+          projectsDoneTitle: 'Completed Projects',
+          projectLink: 'View Project',
+          projDone1Title: 'Souvenir Simattaoi Product Web',
+          projDone2Title: 'Order Mentawai Fast Tickets Online',
+          projDone3Title: 'Digital Invitation Letter Web',
+          projDone4Title: 'Job Application CV Maker',
+          projDone5Title: 'Tokoh Cashier App Web-Based',
+          projDone6Title: 'Motorcycle Rental Booking Web-Based',
+          projDone7Title: 'Short Video App Web-Based',
+          projDone8Title: 'Digital Brochure Maker',
+          projDone9Title: 'Tokoh Counter Top Up Web-Based',
+          projDone10Title: 'Coffee Sirilogui Mentawai Web-Based',
+          conclusionTitle: 'Conclusion of All Projects',
+          conclusionText: 'From <strong>10 completed projects</strong>, it can be concluded that web development has covered various aspects of digital needs — from <strong>product catalogs, ticket booking, invitation letters, CV applications, cashier apps, rental booking, short video apps, digital brochures, top-up counters, to web-based coffee shops</strong>. Each project was built with an approach that prioritizes <strong>functionality, user-friendliness, and modern appearance</strong>. The use of <strong>AI as a development assistant</strong> has proven to accelerate the coding process, improve code quality, and open up broader innovation opportunities. Going forward, these projects will continue to be developed to be even more beneficial for the wider community, especially in the Mentawai Islands and surrounding areas.',
+          projectsTitle: 'Featured Projects',
+          proj1Title: 'AI Analytics Dashboard',
+          proj1Desc: 'Data visualization platform with AI prediction. Built with React & TensorFlow.js, accelerated with AI-assisted coding.',
+          proj2Title: 'Modern E-Commerce',
+          proj2Desc: 'Online store with AI-based product recommendations and integrated payments. Focused on performance & UX.',
+          proj3Title: 'AI Code Assistant Tool',
+          proj3Desc: 'Developer tool for automatic code review, bug detection, and optimization suggestions using AI.',
+          skillsTitle: 'Core Skills',
+          skillsDesc: 'Combination of coding skills and AI utilization for more effective development.',
+          skill1Title: 'AI for Development',
+          skill1Desc: 'Leveraging AI (ChatGPT, Copilot, Claude) for code generation, debugging, refactoring, and problem solving.',
+          skill2Desc: 'Semantic markup, accessible structure, and solid modern web foundations for all devices.',
+          skill3Desc: 'Responsive design, Flexbox, Grid, animations, and modern styling with a maintainable approach.',
+          skill4Desc: 'ES6+, DOM manipulation, async programming, and coding logic for interactive applications.',
+          expTitle: 'Experience',
+          exp1Date: '2023 — Present',
+          exp1Title: 'Senior AI-Assisted Developer',
+          exp1Sub: 'Freelance / Remote',
+          exp1Desc: 'Leading the development of various web and AI projects, integrating AI tools to accelerate delivery and improve code quality. Collaborating with clients from various industries.',
+          exp2Date: '2021 — 2023',
+          exp2Title: 'Frontend Developer',
+          exp2Sub: 'Tech Startup — Jakarta',
+          exp2Desc: 'Building responsive and performant user interfaces using HTML, CSS, JavaScript, and React. Started adopting AI-assisted coding for refactoring and testing.',
+          exp3Date: '2019 — 2021',
+          exp3Title: 'Junior Web Developer',
+          exp3Sub: 'Digital Agency — Bandung',
+          exp3Desc: 'Developed company profile websites, landing pages, and simple e-commerce. Learned coding fundamentals, debugging, and team collaboration.',
+          seniorTitle: 'Learn from Senior Programmers',
+          seniorDesc: 'Learning from senior programmer content on YouTube — the source of knowledge that shaped my coding journey.',
+          senior1Name: 'Senior Programmer 1',
+          senior1Role: 'Web Development & JavaScript',
+          senior1Desc: 'His content discusses JavaScript fundamentals, coding best practices, and how a professional programmer thinks. From here I learned to write clean and structured code.',
+          senior2Name: 'Senior Programmer 2',
+          senior2Role: 'Python & AI',
+          senior2Desc: 'From his content I learned Python, gesture recognition, and AI basics. His explanations are very practical and easy to follow for beginners who want to dive into AI.',
+          senior3Name: 'Senior Programmer 3',
+          senior3Role: 'HTML, CSS & UI/UX',
+          senior3Desc: 'His content teaches how to design modern web interfaces with HTML and CSS, including Flexbox, Grid, and animations. This is what made my web appearance more professional.',
+          senior4Name: 'Senior Programmer 4',
+          senior4Role: 'Mobile & NetBeans',
+          senior4Desc: 'From his content I learned to build desktop and mobile applications using NetBeans, including how to make a simple cashier application that became my first project.',
+          eduTitle: 'Education',
+          eduDesc: 'Academic background and continuous learning.',
+          edu1Date: 'Present',
+          edu1Title: 'Bachelor of Informatics Engineering',
+          edu1Sub: 'UPI YPTK Padang',
+          edu1Desc: 'Currently pursuing a bachelor\'s degree in Informatics Engineering at Universitas Putra Indonesia YPTK Padang. Focused on software engineering, algorithms, and AI-based application development.',
+          edu2Date: '2019 — 2023',
+          edu2Title: 'Vocational High School — Software Engineering',
+          edu2Sub: 'State Vocational School — RPL Major',
+          edu2Desc: 'Learned the basics of web and mobile programming, and built a final project in the form of a simple web application.',
+          edu3Date: 'Throughout Career',
+          edu3Title: 'Continuous Learning',
+          edu3Sub: 'Online Courses & Certifications',
+          edu3Desc: 'Actively taking AI, machine learning, and web development courses from platforms such as Coursera, Dicoding, and freeCodeCamp.',
+          aboutTitle: 'About Me',
+          aboutPhotoPh: 'Put your photo here<br>(beranda.jpg)',
+          aboutP1: 'I am a <strong>developer who delves into the world of programming and coding</strong> — from building HTML structures, designing interfaces with CSS, to bringing interactions to life using JavaScript.',
+          aboutP2: 'I come from a <strong>village child</strong> background in <a href="https://id.wikipedia.org/wiki/Kabupaten_Kepulauan_Mentawai" target="_blank" rel="noopener">Mentawai Islands <i class="fas fa-external-link-alt"></i></a>, and currently I am a <strong>student majoring in Informatics Engineering at</strong> <a href="https://www.upiyptk.ac.id/" target="_blank" rel="noopener">UPI YPTK Padang <i class="fas fa-external-link-alt"></i></a>. This background shaped me into a persistent, adaptive person who is always eager to learn new things.',
+          aboutP3: 'My coding learning experience grew from <strong>self-taught learning</strong> — seeking knowledge from various sources, trying, failing, then rising again. I learned a lot from <strong>AI as a personal tutor</strong>, from <strong>social media</strong>, watching <strong>programmer content on YouTube</strong>, observing <strong>counters</strong> and small businesses around, until finally understanding the basics of web development thoroughly — from the most basic to being able to build professional web projects.',
+          aboutP4: 'In the development process, I <strong>utilize AI as a smart assistant</strong> to accelerate code writing, debugging, refactoring, and exploring the best solutions. AI is not a replacement for coding skills, but an <strong>accelerator</strong> that makes me work more productively and precisely.',
+          aboutHighlightTitle: 'Work Philosophy',
+          aboutHighlightText: 'Good code is born from deep understanding, and accelerated with the right tools. AI helps me focus on architecture & logic, not repetitive things.',
+          termComment1: '// Starting development server...',
+          termAI: '✦ AI: Suggestion applied — 40% faster',
+          termComment2: '// ✓ Build success in 1.2s',
+          socialTitle: 'Social Media',
+          socialDesc: 'A small social media city — click each tower to connect with me.',
+          socialVisit: 'Visit',
+          socialSend: 'Send',
+          socialWatch: 'Watch',
+          socialFollow: 'Follow',
+          waTooltip: 'Contact Me via WhatsApp',
+          langTooltip: 'Change Language',
+          marqueeHint: 'Drag / Swipe ↔',
+          footerText: '© 2026 Erutd M Thalif — Developer & AI-Assisted Coder. Built with <i class="fas fa-heart" style="color: #86efac;"></i> and AI assistance.'
+        }
+      };
+
+      let currentLang = 'id';
+
+      function applyLanguage(lang) {
+        currentLang = lang;
+        const t = translations[lang];
+        if (!t) return;
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (t[key] !== undefined) {
+            const htmlKeys = ['heroDesc', 'conclusionText', 'aboutP1', 'aboutP2', 'aboutP3', 'aboutP4', 'footerText', 'avatarSmall', 'aboutPhotoPh'];
+            if (htmlKeys.includes(key)) {
+              el.innerHTML = t[key];
+            } else {
+              el.textContent = t[key];
+            }
+          }
+        });
+
+        const hint = document.getElementById('expMarqueeHint');
+        if (hint && t['marqueeHint']) hint.textContent = t['marqueeHint'];
+
+        const lbl = document.getElementById('langLabel');
+        if (lbl) lbl.textContent = lang.toUpperCase();
+
+        document.documentElement.lang = lang;
+        try { localStorage.setItem('preferredLang', lang); } catch(e) {}
+      }
+
+      langToggle.addEventListener('click', () => {
+        const nextLang = currentLang === 'id' ? 'en' : 'id';
+        applyLanguage(nextLang);
+      });
+
+      try {
+        const savedLang = localStorage.getItem('preferredLang');
+        if (savedLang && (savedLang === 'id' || savedLang === 'en')) {
+          applyLanguage(savedLang);
+        }
+      } catch(e) {}
+
+      themeToggle.addEventListener('click', function() {
+        body.classList.toggle('light-theme');
+        const isLight = body.classList.contains('light-theme');
+        themeToggle.innerHTML = isLight ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        try { localStorage.setItem('preferredTheme', isLight ? 'light' : 'dark'); } catch(e) {}
+      });
+
+      try {
+        const savedTheme = localStorage.getItem('preferredTheme');
+        if (savedTheme === 'light') {
+          body.classList.add('light-theme');
+          themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+      } catch(e) {}
+
+      function toggleMenu() {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+      }
+      function closeMenu() {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+      hamburger.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', closeMenu);
+
+      skillToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        this.classList.toggle('open');
+        submenu.classList.toggle('open');
+      });
+
+      const fadeElements = document.querySelectorAll('.fade-in');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      fadeElements.forEach(el => observer.observe(el));
+
+    })();
+  </script>
+</body>
+</html>
